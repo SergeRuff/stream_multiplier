@@ -42,7 +42,7 @@ module stream_multiplier
 
     states_e current_state, next_state;
 
-    flip_flop_circle_buffer #(
+    oneshot_buffer #(
         .width(width),
         .depth(depth)
     ) buffer1 (
@@ -57,7 +57,7 @@ module stream_multiplier
         .full(buffer1_full_flag)
     );
 
-    flip_flop_circle_buffer #(
+    oneshot_buffer #(
         .width(width),
         .depth(depth)
     ) buffer2 (

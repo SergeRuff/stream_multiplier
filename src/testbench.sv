@@ -17,7 +17,7 @@ module testbench;
 
     //------------------------------------------------------------------------
 
-    flip_flop_circle_buffer
+    oneshot_buffer
     # (
         .width (fifo_width),
         .depth (fifo_depth)
