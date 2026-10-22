@@ -34,7 +34,7 @@ module oneshot_buffer
 
     //------------------------------------------------------------------------
 
-    always_ff @(posedge clk) begin
+    always_ff @(posedge clk or posedge rst) begin
         if (rst)    push_reg <= '0;
         else        push_reg <= push;
     end
