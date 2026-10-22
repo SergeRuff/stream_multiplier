@@ -1,4 +1,4 @@
-module flip_flop_circle_buffer
+module oneshot_buffer
 # (
     parameter width = 8,
     parameter depth = 10,
@@ -30,13 +30,23 @@ module flip_flop_circle_buffer
 
     logic [width - 1:0] data [0: depth - 1];
 
+    logic push_reg;
+
+    //------------------------------------------------------------------------
+
+    always_ff @(posedge clk) begin
+        if (rst)    push_reg <= '0;
+        else        push_reg <= push;
+    end
+
+
     //------------------------------------------------------------------------
 
     always_ff @ (posedge clk or posedge rst)    begin   :   write_pointer_process
         if (rst)
             wr_ptr <= '0;
-        else if (push)
-            wr_ptr <= wr_ptr == max_ptr ? '0 : wr_ptr + 1'b1;
+        else if (push & !full)
+            wr_ptr <= wr_ptr + 1'b1;
     end :   write_pointer_process
 
     always_ff @ (posedge clk or posedge rst)    begin   :   read_pointer_process
@@ -51,7 +61,7 @@ module flip_flop_circle_buffer
     //------------------------------------------------------------------------
 
     always_ff @ (posedge clk)   begin   : write_data_mux
-        if (push)
+        if (push & !full)
             data [wr_ptr] <= write_data;
     end :   write_data_mux
 
@@ -66,21 +76,25 @@ module flip_flop_circle_buffer
     always_ff @ (posedge clk or posedge rst) begin  :   counter_process
         if (rst)
             cnt <= '0;
-        else if (push & ~ pop)
+        else if (push)
             cnt <= cnt + 1'b1;
-        else if (pop & ~ push)
-            cnt <= cnt - 1'b1;
+        else if (push_reg)
+            cnt <= counter_width'(depth);
     end :   counter_process
 
     //------------------------------------------------------------------------
 
     always_comb begin   :   empty_flag_process
-        empty = (cnt == '0);  // Same as "~| cnt"
+        empty = (cnt == '0);
     end :   empty_flag_process
 
     always_comb begin   :   full_flag_process
-        full = (cnt == counter_width' (depth));
+        full = (cnt == counter_width'(depth));
     end :   full_flag_process
+
+    always_comb begin   :   error_flag_process
+        err = (empty & pop) | (full & push);
+    end :   error_flag_process
 
     // assign empty = (cnt == '0);  // Same as "~| cnt"
     // assign full = (cnt == counter_width' (depth));
