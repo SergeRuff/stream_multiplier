@@ -76,10 +76,12 @@ module oneshot_buffer
     always_ff @ (posedge clk or posedge rst) begin  :   counter_process
         if (rst)
             cnt <= '0;
-        else if (push)
+        else if (push & !full)
             cnt <= cnt + 1'b1;
         else if (push_reg)
-            cnt <= counter_width'(depth);
+            cnt <= counter_width'(depth) - pop;
+        else if (pop & !empty)
+            cnt <= cnt - 1'b1;
     end :   counter_process
 
     //------------------------------------------------------------------------
