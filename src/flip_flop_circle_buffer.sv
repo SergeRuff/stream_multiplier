@@ -1,17 +1,20 @@
 module flip_flop_circle_buffer
 # (
-    parameter width = 8, depth = 10
+    parameter width = 8,
+    parameter depth = 10,
+    parameter REVERSE_BUFFER_MODE = 1'b0
 )
 (
     input                              clk,
     input                              rst,
     input                              push,
     input                              pop,
-    input        [        width - 1:0] write_data,
-    output       [        width - 1:0] read_data,
+    input  logic [        width - 1:0] write_data,
+    output logic [        width - 1:0] read_data,
     output logic [counter_width - 1:0] cnt,
-    output                             empty,
-    output                             full
+    output logic                       empty,
+    output logic                       full,
+    output logic                       err
 );
 
     //------------------------------------------------------------------------
