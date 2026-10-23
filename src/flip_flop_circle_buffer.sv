@@ -30,6 +30,8 @@ module oneshot_buffer
 
     logic [width - 1:0] data [0: depth - 1];
 
+    logic [counter_width - 1:0] cnt_reg;
+
     logic push_reg;
 
     //------------------------------------------------------------------------
@@ -79,14 +81,19 @@ module oneshot_buffer
 
     always_ff @ (posedge clk or posedge rst) begin  :   counter_process
         if (rst)
-            cnt <= '0;
+            cnt_reg <= '0;
         else if (push & !full)
-            cnt <= cnt + 1'b1;
+            cnt_reg <= cnt_reg + 1'b1;
         else if (push_reg)
-            cnt <= counter_width'(depth) - pop;
+            cnt_reg <= counter_width'(depth) - counter_width'(pop);
         else if (pop & !empty)
-            cnt <= cnt - 1'b1;
+            cnt_reg <= cnt_reg - 1'b1;
     end :   counter_process
+
+    always_comb begin   : counter_output_hack
+        cnt = (push_reg & !push)? counter_width'(depth) : cnt_reg;
+    end :   counter_output_hack
+
 
     //------------------------------------------------------------------------
 
