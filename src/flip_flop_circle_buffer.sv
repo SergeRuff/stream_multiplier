@@ -52,9 +52,9 @@ module oneshot_buffer
     always_ff @ (posedge clk or posedge rst)    begin   :   read_pointer_process
         if (rst)
             rd_ptr <= REVERSE_BUFFER_MODE? max_ptr : '0;
-        else if (pop & !REVERSE_BUFFER_MODE)
+        else if (pop & !empty & !REVERSE_BUFFER_MODE)
                 rd_ptr <= rd_ptr == max_ptr ? '0 : rd_ptr + 1'b1;
-        else if (pop &  REVERSE_BUFFER_MODE)
+        else if (pop & !empty &  REVERSE_BUFFER_MODE)
                 rd_ptr <= rd_ptr == '0 ? max_ptr : rd_ptr - 1'b1;
     end :   read_pointer_process
 
