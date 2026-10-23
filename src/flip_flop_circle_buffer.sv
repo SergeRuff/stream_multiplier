@@ -60,8 +60,12 @@ module oneshot_buffer
 
     //------------------------------------------------------------------------
 
-    always_ff @ (posedge clk)   begin   : write_data_mux
-        if (push & !full)
+    always_ff @ (posedge clk or posedge rst)   begin   : write_data_mux
+        if (rst)
+            for (int i = 0; i <= max_ptr; i++)  begin
+               data[i] <= '0;
+            end
+        else if (push & !full)
             data [wr_ptr] <= write_data;
     end :   write_data_mux
 
