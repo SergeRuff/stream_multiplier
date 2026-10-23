@@ -20,6 +20,7 @@ module stream_multiplier
     logic buffer1_pop;
     logic buffer1_full_flag;
     logic buffer1_empty_flag;
+    logic buffer1_error_flag;
     logic [counter_width - 1: 0] buffer1_counter;
     logic [width - 1:0] buffer1_data_out;
 
@@ -27,6 +28,7 @@ module stream_multiplier
     logic buffer2_pop;
     logic buffer2_full_flag;
     logic buffer2_empty_flag;
+    logic buffer2_error_flag;
     logic [counter_width - 1: 0] buffer2_counter;
     logic [width - 1:0] buffer2_data_out;
 
@@ -44,7 +46,8 @@ module stream_multiplier
 
     oneshot_buffer #(
         .width(width),
-        .depth(depth)
+        .depth(depth),
+        .REVERSE_BUFFER_MODE(1'b0)
     ) buffer1 (
         .clk(CLK),
         .rst(RESET),
@@ -54,12 +57,14 @@ module stream_multiplier
         .read_data(buffer1_data_out),
         .cnt(buffer1_counter),
         .empty(buffer1_empty_flag),
-        .full(buffer1_full_flag)
+        .full(buffer1_full_flag),
+        .err(buffer1_error_flag)
     );
 
     oneshot_buffer #(
-        .width(width),
-        .depth(depth)
+            .width(width),
+            .depth(depth),
+            .REVERSE_BUFFER_MODE(1'b1)
     ) buffer2 (
         .clk(CLK),
         .rst(RESET),
@@ -69,7 +74,8 @@ module stream_multiplier
         .read_data(buffer2_data_out),
         .cnt(buffer2_counter),
         .empty(buffer2_empty_flag),
-        .full(buffer2_full_flag)
+        .full(buffer2_full_flag),
+        .err(buffer2_error_flag)
     );
 
 endmodule
