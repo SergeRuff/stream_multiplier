@@ -1,2 +1,11 @@
+# Sigasi project files
 .sigasi/
 project.sigasi
+
+# Icarus Simulation artifacts
+*.out
+*.txt
+
+# Waveform diagrams (except final)
+*.vcd
+!**/final.vcd
