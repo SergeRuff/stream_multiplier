@@ -36,11 +36,10 @@ module oneshot_buffer
 
     //------------------------------------------------------------------------
 
-    always_ff @(posedge clk or posedge rst) begin
+    always_ff @(posedge clk or posedge rst) begin   :   push_previous_state_register
         if (rst)    push_reg <= '0;
         else        push_reg <= push;
-    end
-
+    end : push_previous_state_register
 
     //------------------------------------------------------------------------
 
