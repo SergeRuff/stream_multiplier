@@ -1,4 +1,4 @@
-module testbench;
+module buffer_tb;
 
     localparam fifo_width = 8,
                fifo_depth = 5,
@@ -22,7 +22,7 @@ module testbench;
         .width (fifo_width),
         .depth (fifo_depth)
     )
-    rtl (.cnt(), .*);
+    rtl (.cnt(), .err(), .*);
 
     fifo_monitor
     # (

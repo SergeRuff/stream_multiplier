@@ -281,7 +281,13 @@ simulate_rtl()
     extra_args=""
     choice=0
 
-    if [ -f tb.sv ] || [ -f testbench.sv ]
+    if [ -f buffer_tb.sv ]
+    then
+        extra_args="-s buffer_tb buffer_tb.sv"
+        [ -f oneshot_buffer.sv ] && extra_args="$extra_args oneshot_buffer.sv"
+        [ -f fifo_monitor.sv ]   && extra_args="$extra_args fifo_monitor.sv"
+        run_icarus "$extra_args"
+    elif [ -f tb.sv ]
     then
         # Testbench is in the same directory with the script (HW 05)
         extra_args="$extra_args ./*.sv"
@@ -313,8 +319,8 @@ simulate_rtl()
                         ${d}testbenches/*.sv
                         $common_path/isqrt/*.sv
                         $d*.sv"
-            # elif [ -f "$d"testbench.sv ] && grep -q "realtobits\|cache" "$d"testbench.sv;
-            elif [ -f "$d"testbench.sv ] && grep -q "realtobits" "$d"testbench.sv;
+            # elif [ -f "$d"buffer_tb.sv ] && grep -q "realtobits\|cache" "$d"buffer_tb.sv;
+            elif [ -f "$d"buffer_tb.sv ] && grep -q "realtobits" "$d"buffer_tb.sv;
             then
                 # It is an exercise with Wally CPU blocks
                 prepare_wally_env "$choice"
@@ -355,7 +361,15 @@ lint_code()
 
     extra_args="-I$common_path"
 
-    if [ -f tb.sv ]
+    if [ -f buffer_tb.sv ]
+    then
+        extra_args="$extra_args buffer_tb.sv"
+        [ -f oneshot_buffer.sv ] && extra_args="$extra_args oneshot_buffer.sv"
+        [ -f fifo_monitor.sv ]   && extra_args="$extra_args fifo_monitor.sv"
+        extra_args="$extra_args -top buffer_tb"
+
+        run_verilator "$extra_args"
+    elif [ -f tb.sv ]
     then
         extra_args="$extra_args
                     *.sv
@@ -393,8 +407,8 @@ lint_code()
                             ${d}*.sv
                             -top tb"
             else
-                # if [ -f "$d"testbench.sv ] && grep -q "realtobits\|cache" "$d"testbench.sv;
-                if [ -f "$d"testbench.sv ] && grep -q "realtobits" "$d"testbench.sv;
+                # if [ -f "$d"buffer_tb.sv ] && grep -q "realtobits\|cache" "$d"buffer_tb.sv;
+                if [ -f "$d"buffer_tb.sv ] && grep -q "realtobits" "$d"buffer_tb.sv;
                 then
                     import_path=$(find_path "../import/preprocessed/cvw")
 
@@ -441,7 +455,17 @@ synthesize()
 
     extra_args=""
 
-    if [ -f tb.sv ]
+    if [ -f buffer_tb.sv ]
+    then
+        target_src="oneshot_buffer.sv"
+        [ ! -f "$target_src" ] && [ -f flip_flop_circle_buffer.sv ] && target_src="flip_flop_circle_buffer.sv"
+        {
+            printf "==============================================================\n"
+            printf "Task: oneshot_buffer\n"
+            printf "==============================================================\n"
+        } >> synth_results.txt
+        run_yosys "$target_src"
+    elif [ -f tb.sv ]
     then
         # Testbench is in the same directory with the script (HW 05)
         printf "Synthesis is not implemented yet for this exercise\n"
@@ -463,7 +487,7 @@ synthesize()
                 # It is isqrt exercise
                 printf "Synthesis is not implemented yet for this exercise\n"
                 exit 1
-            elif [ -f "$d"testbench.sv ] && grep -q "realtobits" "$d"testbench.sv;
+            elif [ -f "$d"buffer_tb.sv ] && grep -q "realtobits" "$d"buffer_tb.sv;
             then
                 # It is an exercise with Wally CPU blocks
                 printf "Synthesis is not implemented yet for this exercise\n"
@@ -472,7 +496,7 @@ synthesize()
                 # It is a regular exercise with a testbench in each dir
                 for file in "$d"*.sv
                 do
-                    if [ "$(basename "$file")" != "testbench.sv" ]
+                    if [ "$(basename "$file")" != "buffer_tb.sv" ]
                     then
                         extra_args="$extra_args $file"
                     fi
