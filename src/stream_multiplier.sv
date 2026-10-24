@@ -153,8 +153,9 @@ module stream_multiplier
         endcase
     end :   data_output_logic
 
-    always_comb begin   :   status_flags_logic
-        //
+    always_ff @(posedge CLK) begin   :   status_flags_logic
+        if (RESET)  OE <= '0;
+        else        OE <= (current_state == ST_UPLOAD_RESULT);
     end :   status_flags_logic
 
 endmodule
