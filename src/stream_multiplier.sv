@@ -141,8 +141,16 @@ module stream_multiplier
         endcase
     end :   buffers_control_logic
 
-    always_comb begin   :   data_output_logic
-        //
+    always_ff @(posedge CLK) begin  :   data_output_logic
+        if (RESET)  DOUT <= '0;
+        else case (current_state)
+            ST_IDLE:          DOUT <= '0;
+            ST_LOAD1:         DOUT <= '0;
+            ST_LOAD2:         DOUT <= '0;
+            ST_UPLOAD_RESULT: DOUT <= buffer1_data_out * buffer2_data_out;
+            ST_ERROR:         DOUT <= 'x;
+            default:          DOUT <= 'x;
+        endcase
     end :   data_output_logic
 
     always_comb begin   :   status_flags_logic
