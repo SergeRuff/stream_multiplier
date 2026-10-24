@@ -83,7 +83,8 @@ module stream_multiplier
     end :   state_change_logic
 
     always_ff @(posedge CLK) begin  :   state_registrate
-        //
+        if (RESET) current_state <= ST_IDLE;
+        else       current_state <= next_state;
     end :   state_registrate
 
     always_comb begin   :   buffers_control_logic
