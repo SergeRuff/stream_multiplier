@@ -78,4 +78,24 @@ module stream_multiplier
         .err(buffer2_error_flag)
     );
 
+    always_comb begin   :   state_change_logic
+        //
+    end :   state_change_logic
+
+    always_ff @(posedge CLK) begin  :   state_registrate
+        //
+    end :   state_registrate
+
+    always_comb begin   :   buffers_control_logic
+        //
+    end :   buffers_control_logic
+
+    always_comb begin   :   data_output_logic
+        //
+    end :   data_output_logic
+
+    always_comb begin   :   status_flags_logic
+        //
+    end :   status_flags_logic
+
 endmodule
