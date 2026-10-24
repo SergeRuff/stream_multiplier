@@ -33,6 +33,7 @@ module stream_multiplier
     logic [width - 1:0] buffer2_data_out;
 
     logic illegal_state_flag;
+    logic err_reg;
     logic err;
 
     typedef enum logic [2:0]    {
@@ -83,6 +84,10 @@ module stream_multiplier
         illegal_state_flag = LOAD1 & LOAD2;
     end :   illegal_state_checker
 
+    always_ff @(posedge CLK) begin  :   error_flag_registrator
+        if (RESET)  err_reg <= '0;
+        else        err_reg <= err;
+    end :   error_flag_registrator
 
     always_comb begin   :   state_change_logic
         next_state = current_state;
