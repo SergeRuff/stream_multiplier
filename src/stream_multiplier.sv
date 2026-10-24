@@ -82,15 +82,28 @@ module stream_multiplier
     always_comb begin   :   illegal_state_checker
         illegal_state_flag = LOAD1 & LOAD2;
     end :   illegal_state_checker
-    
+
 
     always_comb begin   :   state_change_logic
-        //
+        next_state = current_state;
+
+        case (current_state)
+            ST_IDLE:            if     (err)                                       next_state = ST_ERROR;
+                                else if(LOAD1 & !illegal_state_flag)               next_state = ST_LOAD1;
+            ST_LOAD1:           if     (err)                                       next_state = ST_ERROR;
+                                else if(LOAD2 & !illegal_state_flag)               next_state = ST_LOAD2;
+            ST_LOAD2:           if     (err)                                       next_state = ST_ERROR;
+                                else if(!LOAD2)                                    next_state = ST_UPLOAD_RESULT; 
+            ST_UPLOAD_RESULT:   if     (err)                                       next_state = ST_ERROR;
+                                else if(buffer1_empty_flag & buffer2_empty_flag)   next_state = ST_IDLE;
+            ST_ERROR:           if     (!err)                                      next_state = ST_IDLE;
+            default:                                                                next_state = ST_IDLE;
+        endcase
     end :   state_change_logic
 
     always_ff @(posedge CLK) begin  :   state_registrate
-        if (RESET) current_state <= ST_IDLE;
-        else       current_state <= next_state;
+        if(RESET) current_state <= ST_IDLE;
+        else      current_state <= next_state;
     end :   state_registrate
 
     always_comb begin   :   buffers_control_logic
