@@ -32,6 +32,7 @@ module stream_multiplier
     logic [counter_width - 1: 0] buffer2_counter;
     logic [width - 1:0] buffer2_data_out;
 
+    logic illegal_state_flag;
     logic err;
 
     typedef enum logic [2:0]    {
@@ -77,6 +78,11 @@ module stream_multiplier
         .full(buffer2_full_flag),
         .err(buffer2_error_flag)
     );
+
+    always_comb begin   :   illegal_state_checker
+        illegal_state_flag = LOAD1 & LOAD2;
+    end :   illegal_state_checker
+    
 
     always_comb begin   :   state_change_logic
         //
