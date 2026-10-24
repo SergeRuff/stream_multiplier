@@ -34,6 +34,7 @@ module stream_multiplier
     logic [counter_width - 1: 0] buffer2_counter;
     logic [width - 1:0] buffer2_data_out;
 
+    logic buffers_reload_flag;
     logic illegal_state_flag;
     logic err_reg;
     logic err;
@@ -114,12 +115,15 @@ module stream_multiplier
     end :   state_registrate
 
     always_comb begin   :   buffers_control_logic
-        buffer1_pop  = 'x;
-        buffer1_rst  = 'x;
-        buffer1_push = 'x;
-        buffer2_pop  = 'x;
-        buffer2_rst  = 'x;
-        buffer2_push = 'x;
+        buffer1_pop         = 'x;
+        buffer1_rst         = 'x;
+        buffer1_push        = 'x;
+        buffer2_pop         = 'x;
+        buffer2_rst         = 'x;
+        buffer2_push        = 'x;
+        buffers_reload_flag = 'x;
+
+        if ((current_state == ST_UPLOAD_RESULT)&(next_state == ST_IDLE)) buffers_reload_flag = 1'b1;
 
         case (current_state)
             ST_IDLE:          begin    {buffer1_pop, buffer1_rst, buffer1_push} = {1'b0, RESET, (LOAD1 & !illegal_state_flag)};
@@ -128,8 +132,8 @@ module stream_multiplier
                                        {buffer2_pop, buffer2_rst, buffer2_push} = '0;                                           end
             ST_LOAD2:         begin    {buffer1_pop, buffer1_rst, buffer1_push} = '0;
                                        {buffer2_pop, buffer2_rst, buffer2_push} = {2'b00, (LOAD2 & !illegal_state_flag)};       end
-            ST_UPLOAD_RESULT: begin    {buffer1_pop, buffer1_rst, buffer1_push} = {1'b1, 2'b0};
-                                       {buffer2_pop, buffer2_rst, buffer2_push} = {1'b1, 2'b0};                                 end
+            ST_UPLOAD_RESULT: begin    {buffer1_pop, buffer1_rst, buffer1_push} = {1'b1, buffers_reload_flag, 1'b0};
+                                       {buffer2_pop, buffer2_rst, buffer2_push} = {1'b1, buffers_reload_flag, 1'b0};            end
             ST_ERROR:         begin    {buffer1_pop, buffer1_rst, buffer1_push} = 3'b010;
                                        {buffer2_pop, buffer2_rst, buffer2_push} = 3'b010;                                       end
             default:          begin    {buffer1_pop, buffer1_rst, buffer1_push} = 3'b010;
