@@ -16,16 +16,18 @@ module stream_multiplier
 
     localparam counter_width = $clog2(depth + 1);
 
-    logic buffer1_push;
     logic buffer1_pop;
+    logic buffer1_rst;
+    logic buffer1_push;
     logic buffer1_full_flag;
     logic buffer1_empty_flag;
     logic buffer1_error_flag;
     logic [counter_width - 1: 0] buffer1_counter;
     logic [width - 1:0] buffer1_data_out;
 
-    logic buffer2_push;
     logic buffer2_pop;
+    logic buffer2_rst;
+    logic buffer2_push;
     logic buffer2_full_flag;
     logic buffer2_empty_flag;
     logic buffer2_error_flag;
@@ -52,7 +54,7 @@ module stream_multiplier
         .REVERSE_BUFFER_MODE(1'b0)
     ) buffer1 (
         .clk(CLK),
-        .rst(RESET),
+        .rst(buffer1_rst),
         .push(buffer1_push),
         .pop(buffer1_pop),
         .write_data(DIN),
@@ -69,7 +71,7 @@ module stream_multiplier
             .REVERSE_BUFFER_MODE(1'b1)
     ) buffer2 (
         .clk(CLK),
-        .rst(RESET),
+        .rst(buffer2_rst),
         .push(buffer2_push),
         .pop(buffer2_pop),
         .write_data(DIN),
