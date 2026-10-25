@@ -20,7 +20,9 @@ module stream_multiplier
     logic buffer1_rst;
     logic buffer1_push;
     logic buffer1_full_flag;
+    logic buffer1_almost_full_flag;
     logic buffer1_empty_flag;
+    logic buffer1_almost_empty_flag;
     logic buffer1_error_flag;
     logic [counter_width - 1: 0] buffer1_counter;
     logic [width - 1:0] buffer1_data_out;
@@ -29,7 +31,9 @@ module stream_multiplier
     logic buffer2_rst;
     logic buffer2_push;
     logic buffer2_full_flag;
+    logic buffer2_almost_full_flag;
     logic buffer2_empty_flag;
+    logic buffer2_almost_empty_flag;
     logic buffer2_error_flag;
     logic [counter_width - 1: 0] buffer2_counter;
     logic [width - 1:0] buffer2_data_out;
@@ -62,7 +66,9 @@ module stream_multiplier
         .read_data(buffer1_data_out),
         .cnt(buffer1_counter),
         .empty(buffer1_empty_flag),
+        .almost_empty(buffer1_almost_empty_flag),
         .full(buffer1_full_flag),
+        .almost_full(buffer1_almost_full_flag),
         .err(buffer1_error_flag)
     );
 
@@ -79,7 +85,9 @@ module stream_multiplier
         .read_data(buffer2_data_out),
         .cnt(buffer2_counter),
         .empty(buffer2_empty_flag),
+        .almost_empty(buffer2_almost_empty_flag),
         .full(buffer2_full_flag),
+        .almost_full(buffer2_almost_full_flag),
         .err(buffer2_error_flag)
     );
 
