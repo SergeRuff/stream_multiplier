@@ -336,16 +336,16 @@ module testbench;
         endtask
 
         virtual task do_check();
-            int cnt;
+            int cnt = 0;
             input_data_sample in1_ds, in2_ds, rev_in2_ds[$];
             output_data_sample out_ds;
 
             forever begin
                 wait(!areset);
-                wait(m_tvalid);
+                // wait(m_tvalid);
                 fork
                     forever begin
-                        get_reversed_mailbox_queue(in2_mbx, rev_in2_ds);
+                        if (rev_in2_ds.size() == 0) get_reversed_mailbox_queue(in2_mbx, rev_in2_ds);
                         in1_mbx.get(in1_ds);
                         in2_ds = rev_in2_ds.pop_front();
                         out_mbx.get(out_ds);
@@ -363,9 +363,13 @@ module testbench;
                     done = 1;
                     break;
                 end
-                while (in1_mbx.try_get(in1_ds)) cnt = cnt;
-                while (in2_mbx.try_get(in2_ds)) cnt = cnt;
-                while (out_mbx.try_get(out_ds)) cnt = cnt;
+                if ((in1_mbx.num() > 0) ||
+                    (in2_mbx.num() > 0) ||
+                    (rev_in2_ds.size() > 0)) cnt = cnt + 1;
+                while (in1_mbx.try_get(in1_ds));
+                while (in2_mbx.try_get(in2_ds));
+                rev_in2_ds.delete();
+                while (out_mbx.try_get(out_ds));
             end
         endtask
     endclass
