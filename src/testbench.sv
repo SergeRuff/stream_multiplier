@@ -304,7 +304,7 @@ module testbench;
     endclass
 
     class result_checker;
-        localparam DEPTH = 128;    
+        localparam DEPTH = 128;
 
         test_cfg cfg;
 
@@ -314,10 +314,31 @@ module testbench;
         mailbox#(input_data_sample) in2_mbx;
         mailbox#(output_data_sample) out_mbx;
 
+        input_data_sample in1_straight_queue[$];
         input_data_sample in2_reversed_queue[$];
 
         virtual task run();
             do_check();
+        endtask
+
+        virtual task get_straight_mailbox_queue(
+            input mailbox#(input_data_sample) mailbox_with_straight_queue,
+            output input_data_sample straight_zero_padded_mailbox_queue[$]
+            );
+
+            input_data_sample tmp;
+            straight_zero_padded_mailbox_queue.delete();
+
+            do begin
+                mailbox_with_straight_queue.get(tmp);
+                straight_zero_padded_mailbox_queue.push_back(tmp);
+            end while (!tmp.s_tlast);
+
+            while (straight_zero_padded_mailbox_queue.size() < DEPTH)   begin
+                tmp = new();
+                tmp.s_tdata = '0;
+                straight_zero_padded_mailbox_queue.push_back(tmp);
+            end
         endtask
 
         virtual task get_reversed_mailbox_queue(
@@ -325,16 +346,22 @@ module testbench;
             output input_data_sample reversed_mailbox_queue[$]
             );
 
+            input_data_sample tmp;
             reversed_mailbox_queue.delete();
 
-            repeat(DEPTH) begin
-                input_data_sample tmp;
+            do begin
                 mailbox_with_straight_queue.get(tmp);
+                reversed_mailbox_queue.push_front(tmp);
+            end while (!tmp.s_tlast);
+
+            while (reversed_mailbox_queue.size() < DEPTH) begin
+                tmp = new();
+                tmp.s_tdata = '0;
                 reversed_mailbox_queue.push_front(tmp);
             end
         endtask
 
-        virtual task check(input_data_sample in1, input_data_sample in2, output_data_sample out);
+        virtual task check_value(input_data_sample in1, input_data_sample in2, output_data_sample out);
             if ((in1.s_tdata*in2.s_tdata) !== out.tdata)    begin
                 $error(
                     "Invalid multiplication result: Recieved: %0d, Expected: %0d * %0d = %0d",
@@ -348,7 +375,7 @@ module testbench;
 
         virtual task do_check();
             int cnt = 0;
-            input_data_sample in1_ds, in2_ds, rev_in2_ds[$];
+            input_data_sample in1_ds, in2_ds, str_in1_ds[$], rev_in2_ds[$];
             output_data_sample out_ds;
 
             forever begin
@@ -356,12 +383,15 @@ module testbench;
                 // wait(m_tvalid);
                 fork
                     forever begin
-                        if (rev_in2_ds.size() == 0) get_reversed_mailbox_queue(in2_mbx, rev_in2_ds);
-                        in1_mbx.get(in1_ds);
+                        if ((str_in1_ds.size() == 0)&&(rev_in2_ds.size() == 0)) begin
+                            get_straight_mailbox_queue(in1_mbx, str_in1_ds);
+                            get_reversed_mailbox_queue(in2_mbx, rev_in2_ds);
+                        end
+                        in1_ds = str_in1_ds.pop_front();
                         in2_ds = rev_in2_ds.pop_front();
                         out_mbx.get(out_ds);
 
-                        check(in1_ds, in2_ds, out_ds);
+                        check_value(in1_ds, in2_ds, out_ds);
                         cnt = cnt + out_ds.tlast;
                         if(cnt == cfg.master_pkt_amount) break;
                     end
@@ -374,11 +404,14 @@ module testbench;
                     done = 1;
                     break;
                 end
-                if ((in1_mbx.num() > 0) ||
-                    (in2_mbx.num() > 0) ||
-                    (rev_in2_ds.size() > 0)) cnt = cnt + 1;
+                if ((in1_mbx.num() > 0)     ||
+                    (in2_mbx.num() > 0)     ||
+                    (str_in1_ds.size() > 0) ||
+                    (rev_in2_ds.size() > 0)
+                    ) cnt = cnt + 1;
                 while (in1_mbx.try_get(in1_ds));
                 while (in2_mbx.try_get(in2_ds));
+                str_in1_ds.delete();
                 rev_in2_ds.delete();
                 while (out_mbx.try_get(out_ds));
             end
