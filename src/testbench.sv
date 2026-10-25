@@ -212,7 +212,7 @@ module testbench;
             s_tfirst2 <= '0;
         endtask
 
-        virtual task drive_master(input_data_sample ds);
+        virtual task drive_master(input input_data_sample ds);
             repeat(ds.delay) @(posedge clk);
             s_tfirst1 <= ds.s_tfirst1;
             s_tfirst2 <= ds.s_tfirst2;
@@ -224,9 +224,6 @@ module testbench;
                 repeat(2) @(posedge clk);
                 while(m_tvalid) @(posedge clk);
             end
-            while(m_tvalid);
-            s_tfirst1 <= '0;
-            s_tfirst2 <= '0;
         endtask
     endclass
 
