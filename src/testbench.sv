@@ -134,8 +134,8 @@ module testbench;
                 ds = create_sample();
                 if (i == 0) ds.delay = delay;
                 else        ds.delay = 0;
-                ds.s_tfirst1 = (i==0);
-                ds.s_tfirst2 = (i==load1_size);
+                ds.s_tfirst1 = (i< load1_size);
+                ds.s_tfirst2 = (i>=load1_size);
                 ds.s_tdata     = $urandom;
                 gen2drv.put(ds);
             end
