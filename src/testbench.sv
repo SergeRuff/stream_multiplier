@@ -270,10 +270,10 @@ module testbench;
             @(posedge clk);
             if(m_tvalid)    begin
                 ds = new();
-                sample_counter++;
                 ds.tdata = m_tdata;
                 ds.tlast = (sample_counter==128-1);
                 out_mbx.put(ds);
+                sample_counter = (sample_counter==128-1)? 0 : (sample_counter + 1);
             end
         endtask
     endclass
