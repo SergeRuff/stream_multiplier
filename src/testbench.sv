@@ -26,11 +26,15 @@ module testbench;
 
     parameter CLK_PEROID = 10;
 
-    class data_sample;
+    class input_data_sample;
         int         delay;
-        logic [7:0] tdata;
+        logic [0:7] tdata;
         logic       s_tfirst1;
         logic       s_tfirst2;
+    endclass
+
+    class output_data_sample;
+        logic [7:0] tdata;
     endclass
 
     task reset();
@@ -109,7 +113,7 @@ module testbench;
     class master_gen;
         test_cfg cfg;
 
-        mailbox#(data_sample) gen2drv;
+        mailbox#(input_data_sample) gen2drv;
 
         virtual task run();
             repeat(cfg.master_pkt_amount)   begin
@@ -118,7 +122,7 @@ module testbench;
         endtask
 
         virtual task gen_master();
-            data_sample ds;
+            input_data_sample ds;
             int load1_size, load2_size;
             int delay;
             load1_size = $urandom_range(cfg.master_load1_samples_amount_max, cfg.master_load1_samples_amount_min);
@@ -136,8 +140,8 @@ module testbench;
             end
         endtask
 
-        virtual function data_sample create_sample();
-            data_sample ds;
+        virtual function input_data_sample create_sample();
+            input_data_sample ds;
             ds = new();
             return ds;
         endfunction
