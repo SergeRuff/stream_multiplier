@@ -28,7 +28,7 @@ module testbench;
 
     class input_data_sample;
         int         delay;
-        logic [0:7] tdata;
+        logic [0:7] s_tdata;
         logic       s_tfirst1;
         logic       s_tfirst2;
     endclass
@@ -135,7 +135,7 @@ module testbench;
                 else        ds.delay = 0;
                 ds.s_tfirst1 = (i==0);
                 ds.s_tfirst2 = (i==load1_size);
-                ds.tdata     = $urandom;
+                ds.s_tdata     = $urandom;
                 gen2drv.put(ds);
             end
         endtask
@@ -148,7 +148,33 @@ module testbench;
     endclass
 
     class master_monitor;
-        //
+        mailbox#(input_data_sample) in_mbx;
+
+        virtual task run();
+            forever begin
+                wait(!areset);
+                fork
+                    forever begin
+                        m_monitor();
+                    end
+                join_none
+                wait(areset);
+                disable fork;
+            end
+        endtask
+
+        virtual task m_monitor();
+            input_data_sample ds;
+            @(posedge clk);
+            if (s_tfirst1 | s_tfirst2)   begin
+                ds = new();
+                ds.s_tdata = s_tdata;
+                ds.delay = '0;
+                ds.s_tfirst1 = s_tfirst1;
+                ds.s_tfirst2 = s_tfirst2;
+                in_mbx.put(ds);
+            end
+        endtask
     endclass
 
     class master_driver;
