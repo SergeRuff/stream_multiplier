@@ -1,8 +1,15 @@
 `timescale 1ns/1ps
 
 module testbench;
-    logic   clk;
-    logic   areset;
+    logic       clk;
+    logic       areset;
+
+    logic       s_tfirst1;
+    logic       s_tfirst2;
+    logic [0:7] s_tdata;
+
+    logic       m_tvalid;
+    logic [7:0] m_tdata;
 
     stream_multiplier #(
         .width(width),
@@ -20,7 +27,10 @@ module testbench;
     parameter CLK_PEROID = 10;
 
     class data_stream;
-        //
+        int         delay;
+        logic [7:0] tdata;
+        logic       s_tfirst1;
+        logic       s_tfirst2;
     endclass
 
     task reset();
