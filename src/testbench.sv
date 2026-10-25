@@ -168,16 +168,27 @@ module testbench;
         endtask
 
         virtual task m_monitor();
-            input_data_sample ds;
+            input_data_sample ds1, ds2;
             @(posedge clk);
-            if (s_tfirst1 | s_tfirst2)   begin
-                ds = new();
-                ds.s_tdata = s_tdata;
-                ds.delay = '0;
-                ds.s_tfirst1 = s_tfirst1;
-                ds.s_tfirst2 = s_tfirst2;
-                if(s_tfirst1) in1_mbx.put(ds);
-                if(s_tfirst2) in2_mbx.put(ds);
+            while(s_tfirst1)    begin
+                ds1 = new();
+                ds1.s_tdata = s_tdata;
+                ds1.delay = '0;
+                ds1.s_tfirst1 = s_tfirst1;
+                ds1.s_tfirst2 = s_tfirst2;
+                @(posedge clk);
+                ds1.s_tlast   = !s_tfirst1;
+                in1_mbx.put(ds1);
+            end
+            while(s_tfirst2)    begin
+                ds2 = new();
+                ds2.s_tdata = s_tdata;
+                ds2.delay = '0;
+                ds2.s_tfirst1 = s_tfirst1;
+                ds2.s_tfirst2 = s_tfirst2;
+                @(posedge clk);
+                ds2.s_tlast   = !s_tfirst2;
+                in2_mbx.put(ds2);
             end
         endtask
     endclass
