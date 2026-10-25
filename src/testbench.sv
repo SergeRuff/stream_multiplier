@@ -47,6 +47,7 @@ module testbench;
     endtask
 
     class test_cfg;
+        int master_pkt_amount;
         int master_samples_amount;
         int master_samples_amount_min;
         int master_samples_amount_max;
@@ -56,11 +57,12 @@ module testbench;
         int test_timeout_cycles;
 
         function new(
+            input int master_pkt_amount           = 100,
             input int master_samples_amount_min   = 1,
             input int master_samples_amount_max   = 150,
             input int master_delay_min            = 0,
             input int master_delay_max            = 10,
-            input int test_timeout_cycles       = 10_000_000
+            input int test_timeout_cycles         = 10_000_000
         );
             string str;
 
@@ -68,6 +70,7 @@ module testbench;
                 $fatal(1, "[test_cfg] Error: min value is greater than max value!");
             end
 
+            this.master_pkt_amount = master_pkt_amount;
             this.master_samples_amount_min = master_samples_amount_min;
             this.master_samples_amount_max = master_samples_amount_max;
             this.master_delay_min = master_delay_min;
@@ -77,13 +80,14 @@ module testbench;
             this.master_samples_amount = $urandom_range(master_samples_amount_max, master_samples_amount_min);
             this.master_delay = $urandom_range(master_delay_max, master_delay_min);
 
-            str = {str, $sformatf("master_samples_amount_min    : %0d\n", master_samples_amount_min    )};
-            str = {str, $sformatf("master_samples_amount_max    : %0d\n", master_samples_amount_max    )};
-            str = {str, $sformatf("master_samples_amount        : %0d\n", master_samples_amount        )};
-            str = {str, $sformatf("master_delay_min   : %0d\n", master_delay_min   )};
-            str = {str, $sformatf("master_delay_max   : %0d\n", master_delay_max   )};
-            str = {str, $sformatf("master_delay       : %0d\n", master_delay       )};
-            str = {str, $sformatf("test_timeout_cycles: %0d\n", test_timeout_cycles)};
+            str = {str, $sformatf("master_pkt_amount        : %0d\n", master_pkt_amount         )};
+            str = {str, $sformatf("master_samples_amount_min: %0d\n", master_samples_amount_min )};
+            str = {str, $sformatf("master_samples_amount_max: %0d\n", master_samples_amount_max )};
+            str = {str, $sformatf("master_samples_amount    : %0d\n", master_samples_amount     )};
+            str = {str, $sformatf("master_delay_min         : %0d\n", master_delay_min          )};
+            str = {str, $sformatf("master_delay_max         : %0d\n", master_delay_max          )};
+            str = {str, $sformatf("master_delay             : %0d\n", master_delay              )};
+            str = {str, $sformatf("test_timeout_cycles      : %0d\n", test_timeout_cycles       )};
             $display(str);
         endfunction
     endclass
