@@ -107,7 +107,40 @@ module testbench;
     endclass
 
     class master_gen;
-        //
+        test_cfg cfg;
+
+        mailbox#(data_sample) gen2drv;
+
+        virtual task run();
+            repeat(cfg.master_pkt_amount)   begin
+                gen_master();
+            end
+        endtask
+
+        virtual task gen_master();
+            data_sample ds;
+            int load1_size, load2_size;
+            int delay;
+            load1_size = $urandom_range(cfg.master_load1_samples_amount_max, cfg.master_load1_samples_amount_min);
+            load2_size = $urandom_range(cfg.master_load2_samples_amount_max, cfg.master_load2_samples_amount_min);
+            delay = $urandom_range(cfg.master_delay_max, cfg.master_delay_min);
+
+            for (int i = 0; i < (load1_size+load2_size); i++)  begin
+                ds = create_sample();
+                if (i == 0) ds.delay = delay;
+                else        ds.delay = 0;
+                ds.s_tfirst1 = (i==0);
+                ds.s_tfirst2 = (i==load1_size);
+                ds.tdata     = $urandom;
+                gen2drv.put(ds);
+            end
+        endtask
+
+        virtual function data_sample create_sample();
+            data_sample ds;
+            ds = new();
+            return ds;
+        endfunction
     endclass
 
     class master_monitor;
