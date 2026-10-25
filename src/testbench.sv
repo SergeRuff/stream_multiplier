@@ -270,10 +270,6 @@ module testbench;
         endtask
     endclass
 
-    // class slave_driver;
-    //     //
-    // endclass
-
     class slave_agent;
         slave_monitor   slave_monitor;
 
@@ -289,6 +285,8 @@ module testbench;
     endclass
 
     class result_checker;
+        localparam DEPTH = 128;    
+
         test_cfg cfg;
 
         bit done;
@@ -297,8 +295,24 @@ module testbench;
         mailbox#(input_data_sample) in2_mbx;
         mailbox#(output_data_sample) out_mbx;
 
+        input_data_sample in2_reversed_queue[$];
+
         virtual task run();
             do_check();
+        endtask
+
+        virtual task get_reversed_mailbox_queue(
+            input mailbox#(input_data_sample) mailbox_with_straight_queue,
+            output input_data_sample reversed_mailbox_queue[$]
+            );
+
+            reversed_mailbox_queue.delete();
+
+            repeat(DEPTH) begin
+                input_data_sample tmp;
+                mailbox_with_straight_queue.get(tmp);
+                reversed_mailbox_queue.push_front(tmp);
+            end
         endtask
 
         virtual task check(input_data_sample in1, input_data_sample in2, output_data_sample out);
@@ -315,7 +329,7 @@ module testbench;
 
         virtual task do_check();
             int cnt;
-            input_data_sample in1_ds, in2_ds;
+            input_data_sample in1_ds, in2_ds, rev_in2_ds[$];
             output_data_sample out_ds;
 
             forever begin
@@ -323,9 +337,11 @@ module testbench;
                 wait(m_tvalid);
                 fork
                     forever begin
+                        get_reversed_mailbox_queue(in2_mbx, rev_in2_ds);
                         in1_mbx.get(in1_ds);
-                        in2_mbx.get(in2_ds);
+                        in2_ds = rev_in2_ds.pop_front();
                         out_mbx.get(out_ds);
+
                         check(in1_ds, in2_ds, out_ds);
                         cnt = cnt + out_ds.tlast;
                         if(cnt == cfg.master_pkt_amount) break;
@@ -343,7 +359,6 @@ module testbench;
                 while (in2_mbx.try_get(in2_ds)) cnt = cnt;
                 while (out_mbx.try_get(out_ds)) cnt = cnt;
             end
-
         endtask
     endclass
 
