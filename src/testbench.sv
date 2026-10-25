@@ -269,7 +269,17 @@ module testbench;
     // endclass
 
     class slave_agent;
-        //
+        slave_monitor   slave_monitor;
+
+        function new();
+            slave_monitor = new();
+        endfunction
+
+        virtual task run();
+            fork
+                slave_monitor.run();
+            join
+        endtask
     endclass
 
     class result_checker;
