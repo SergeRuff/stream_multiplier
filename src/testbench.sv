@@ -436,6 +436,7 @@ module testbench;
         test test;
         test = new();
         fork
+            clock_generation();
             reset();
             test.run();
         join_none
