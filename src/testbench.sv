@@ -308,7 +308,8 @@ module testbench;
 
         test_cfg cfg;
 
-        bit done;
+        bit done = 0;
+        bit err_flag_detected = 0;
 
         mailbox#(input_data_sample) in1_mbx;
         mailbox#(input_data_sample) in2_mbx;
@@ -318,7 +319,10 @@ module testbench;
         input_data_sample in2_reversed_queue[$];
 
         virtual task run();
-            do_check();
+            fork
+                monitor_error_flag();
+                do_check();
+            join
         endtask
 
         virtual task get_straight_mailbox_queue(
@@ -373,6 +377,14 @@ module testbench;
             end
         endtask
 
+        virtual task check_error_flag(input bit expected_err);
+            if (expected_err !== err_flag_detected) begin
+                $error("Something wrong with DUT.err flag: Expected = %0b, Received = %0b.",
+                expected_err, err_flag_detected);
+            end
+            err_flag_detected = '0;
+        endtask
+
         virtual task do_check();
             int cnt = 0;
             input_data_sample in1_ds, in2_ds, str_in1_ds[$], rev_in2_ds[$];
@@ -384,8 +396,19 @@ module testbench;
                 fork
                     forever begin
                         if ((str_in1_ds.size() == 0)&&(rev_in2_ds.size() == 0)) begin
+                            bit is_overflow;
                             get_straight_mailbox_queue(in1_mbx, str_in1_ds);
                             get_reversed_mailbox_queue(in2_mbx, rev_in2_ds);
+
+                            is_overflow = (str_in1_ds.size() > DEPTH) || (rev_in2_ds.size() > DEPTH);
+                            check_error_flag(is_overflow);
+                            if (is_overflow) begin
+                                str_in1_ds.delete();
+                                rev_in2_ds.delete();
+                                cnt = cnt + 1;
+                                if (cnt == cfg.master_pkt_amount)   break;
+                                else continue;
+                            end
                         end
                         in1_ds = str_in1_ds.pop_front();
                         in2_ds = rev_in2_ds.pop_front();
@@ -414,6 +437,15 @@ module testbench;
                 str_in1_ds.delete();
                 rev_in2_ds.delete();
                 while (out_mbx.try_get(out_ds));
+                err_flag_detected = '0;
+            end
+        endtask
+
+        virtual task monitor_error_flag();
+            forever begin
+                @(posedge clk);
+                if      (areset)      err_flag_detected = 0;
+                else if (DUT.err)     err_flag_detected = 1;
             end
         endtask
     endclass
