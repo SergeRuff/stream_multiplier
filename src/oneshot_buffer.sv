@@ -14,7 +14,9 @@ module oneshot_buffer
     output logic [        width - 1:0] read_data,
     output logic [counter_width - 1:0] cnt,
     output logic                       empty,
+    output logic                       almost_empty,
     output logic                       full,
+    output logic                       almost_full,
     output logic                       err
 );
 
@@ -96,13 +98,15 @@ module oneshot_buffer
 
     //------------------------------------------------------------------------
 
-    always_comb begin   :   empty_flag_process
-        empty = (cnt == '0);
-    end :   empty_flag_process
+    always_comb begin   :   empty_flags_process
+        empty        = (cnt == '0);
+        almost_empty = (cnt == counter_width'(1'b1));
+    end :   empty_flags_process
 
-    always_comb begin   :   full_flag_process
-        full = (cnt == counter_width'(depth));
-    end :   full_flag_process
+    always_comb begin   :   full_flags_process
+        full        = (cnt == counter_width'(depth));
+        almost_full = (cnt == counter_width'(depth - 1));
+    end :   full_flags_process
 
     always_comb begin   :   error_flag_process
         err = (empty & pop) | (full & push);
