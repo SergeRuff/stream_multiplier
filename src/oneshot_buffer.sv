@@ -38,21 +38,21 @@ module oneshot_buffer
 
     //------------------------------------------------------------------------
 
-    always_ff @(posedge clk or posedge rst) begin   :   push_previous_state_register
+    always_ff @(posedge clk) begin   :   push_previous_state_register
         if (rst)    push_reg <= '0;
         else        push_reg <= push;
     end : push_previous_state_register
 
     //------------------------------------------------------------------------
 
-    always_ff @ (posedge clk or posedge rst)    begin   :   write_pointer_process
+    always_ff @ (posedge clk)    begin   :   write_pointer_process
         if (rst)
             wr_ptr <= '0;
         else if (push & !full)
             wr_ptr <= wr_ptr + 1'b1;
     end :   write_pointer_process
 
-    always_ff @ (posedge clk or posedge rst)    begin   :   read_pointer_process
+    always_ff @ (posedge clk)    begin   :   read_pointer_process
         if (rst)
             rd_ptr <= REVERSE_BUFFER_MODE? max_ptr : '0;
         else if (pop & !empty & !REVERSE_BUFFER_MODE)
@@ -63,7 +63,7 @@ module oneshot_buffer
 
     //------------------------------------------------------------------------
 
-    always_ff @ (posedge clk or posedge rst)   begin   : write_data_mux
+    always_ff @ (posedge clk)   begin   : write_data_mux
         if (rst)
             for (int i = 0; i <= max_ptr; i++)  begin
                data[i] <= '0;
@@ -80,7 +80,7 @@ module oneshot_buffer
 
     //------------------------------------------------------------------------
 
-    always_ff @ (posedge clk or posedge rst) begin  :   counter_process
+    always_ff @ (posedge clk) begin  :   counter_process
         if (rst)
             cnt_reg <= '0;
         else if (push & !full)
