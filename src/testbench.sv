@@ -348,7 +348,23 @@ module testbench;
     endclass
 
     class env;
-        //
+        master_agent master;
+        slave_agent slave;
+        result_checker check;
+
+        function new();
+            master = new();
+            slave  = new();
+            check  = new();
+        endfunction
+
+        virtual task run();
+            fork
+                master.run();
+                slave.run();
+                check.run();
+            join
+        endtask
     endclass
 
     class test;
