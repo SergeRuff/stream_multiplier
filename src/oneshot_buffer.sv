@@ -2,6 +2,7 @@ module oneshot_buffer
 # (
     parameter width = 8,
     parameter depth = 10,
+    parameter counter_width = $clog2 (depth + 1),
     parameter REVERSE_BUFFER_MODE = 1'b0
 )
 (
@@ -19,8 +20,7 @@ module oneshot_buffer
 
     //------------------------------------------------------------------------
 
-    localparam pointer_width = $clog2 (depth + (depth==1)),
-               counter_width = $clog2 (depth + 1);
+    localparam pointer_width = $clog2 (depth + (depth==1));
 
     localparam max_ptr = pointer_width' (depth - 1);
 
