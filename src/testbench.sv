@@ -31,6 +31,7 @@ module testbench;
         logic [0:7] s_tdata;
         logic       s_tfirst1;
         logic       s_tfirst2;
+        logic       s_tlast;
     endclass
 
     class output_data_sample;
@@ -137,6 +138,7 @@ module testbench;
                 ds.s_tfirst1 = (i< load1_size);
                 ds.s_tfirst2 = (i>=load1_size);
                 ds.s_tdata     = $urandom;
+                ds.s_tlast     = (i == (load1_size + load2_size -1));
                 gen2drv.put(ds);
             end
         endtask
@@ -195,6 +197,10 @@ module testbench;
                 join_none
                 wait(areset);
                 disable fork;
+                if (ds != null) begin
+                    while(!ds.s_tlast && gen2drv.try_get(ds));
+                    ds = null;
+                end
                 reset_master();
                 wait(!areset);
             end
@@ -211,8 +217,12 @@ module testbench;
             s_tfirst1 <= ds.s_tfirst1;
             s_tfirst2 <= ds.s_tfirst2;
             s_tdata   <= ds.s_tdata;
-            do begin
-                @(posedge clk);
+            @(posedge clk);
+            if (ds.s_tlast) begin
+                s_tfirst1 <= '0;
+                s_tfirst2 <= '0;
+                repeat(2) @(posedge clk);
+                while(m_tvalid) @(posedge clk);
             end
             while(m_tvalid);
             s_tfirst1 <= '0;
