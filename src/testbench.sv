@@ -178,7 +178,43 @@ module testbench;
     endclass
 
     class master_driver;
-        //
+        mailbox#(input_data_sample) gen2drv;
+
+        virtual task run();
+            input_data_sample ds;
+            forever begin
+                @(posedge clk);
+                fork
+                    forever begin
+                        gen2drv.get(ds);
+                        drive_master(ds);
+                    end
+                join_none
+                wait(areset);
+                disable fork;
+                reset_master();
+                wait(!areset);
+            end
+        endtask
+
+        virtual task  reset_master();
+            s_tdata <= '0;
+            s_tfirst1 <= '0;
+            s_tfirst2 <= '0;
+        endtask
+
+        virtual task drive_master(input_data_sample ds);
+            repeat(ds.delay) @(posedge clk);
+            s_tfirst1 <= ds.s_tfirst1;
+            s_tfirst2 <= ds.s_tfirst2;
+            s_tdata   <= ds.s_tdata;
+            do begin
+                @(posedge clk);
+            end
+            while(m_tvalid);
+            s_tfirst1 <= '0;
+            s_tfirst2 <= '0;
+        endtask
     endclass
 
     class master_agent;
