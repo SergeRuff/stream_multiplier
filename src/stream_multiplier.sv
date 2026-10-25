@@ -129,19 +129,19 @@ module stream_multiplier
         buffer2_pop         = 'x;
         buffer2_rst         = 'x;
         buffer2_push        = 'x;
-        buffers_reload_flag = 'x;
+        buffers_reload_flag = ((current_state==ST_UPLOAD_RESULT)&(next_state==ST_IDLE));
 
-        if ((current_state == ST_UPLOAD_RESULT)&(next_state == ST_IDLE)) buffers_reload_flag = 1'b1;
+        // if ((current_state==ST_UPLOAD_RESULT)&(next_state==ST_IDLE)) buffers_reload_flag = 1'b1;
 
         case (current_state)
             ST_IDLE:          begin    {buffer1_pop, buffer1_rst, buffer1_push} = {1'b0, RESET, (LOAD1 & !illegal_state_flag)};
-                                       {buffer2_pop, buffer2_rst, buffer2_push} = 3'b010;                                       end
-            ST_LOAD1:         begin    {buffer1_pop, buffer1_rst, buffer1_push} = {2'b00, (LOAD1 & !illegal_state_flag)};
-                                       {buffer2_pop, buffer2_rst, buffer2_push} = '0;                                           end
-            ST_LOAD2:         begin    {buffer1_pop, buffer1_rst, buffer1_push} = '0;
-                                       {buffer2_pop, buffer2_rst, buffer2_push} = {2'b00, (LOAD2 & !illegal_state_flag)};       end
-            ST_UPLOAD_RESULT: begin    {buffer1_pop, buffer1_rst, buffer1_push} = {1'b1, buffers_reload_flag, 1'b0};
-                                       {buffer2_pop, buffer2_rst, buffer2_push} = {1'b1, buffers_reload_flag, 1'b0};            end
+                                       {buffer2_pop, buffer2_rst, buffer2_push} = {1'b0, 1'b1, 1'b0};                           end
+            ST_LOAD1:         begin    {buffer1_pop, buffer1_rst, buffer1_push} = {1'b0, RESET, (LOAD1 & !illegal_state_flag)};
+                                       {buffer2_pop, buffer2_rst, buffer2_push} = {1'b0, RESET, (LOAD2 & !illegal_state_flag)}; end
+            ST_LOAD2:         begin    {buffer1_pop, buffer1_rst, buffer1_push} = {1'b0, RESET, 1'b0};
+                                       {buffer2_pop, buffer2_rst, buffer2_push} = {1'b0, RESET, (LOAD2 & !illegal_state_flag)}; end
+            ST_UPLOAD_RESULT: begin    {buffer1_pop, buffer1_rst, buffer1_push} = {1'b1, buffers_reload_flag | RESET, 1'b0};
+                                       {buffer2_pop, buffer2_rst, buffer2_push} = {1'b1, buffers_reload_flag | RESET, 1'b0};    end
             ST_ERROR:         begin    {buffer1_pop, buffer1_rst, buffer1_push} = 3'b010;
                                        {buffer2_pop, buffer2_rst, buffer2_push} = 3'b010;                                       end
             default:          begin    {buffer1_pop, buffer1_rst, buffer1_push} = 3'b010;
