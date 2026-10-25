@@ -158,4 +158,8 @@ module stream_multiplier
         else        OE <= (current_state == ST_UPLOAD_RESULT);
     end :   status_flags_logic
 
+    always_comb begin   :   error_flag_logic
+        err = buffer1_error_flag | buffer2_error_flag;
+    end :   error_flag_logic
+
 endmodule
