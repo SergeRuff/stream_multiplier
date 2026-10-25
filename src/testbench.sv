@@ -418,7 +418,14 @@ module testbench;
     endclass
 
     initial begin   :   main
-        //
+        test test;
+        test = new();
+        fork
+            reset();
+            test.run();
+        join_none
+        repeat(100) @(posedge clk);
+        reset();
     end :   main
 
 endmodule
