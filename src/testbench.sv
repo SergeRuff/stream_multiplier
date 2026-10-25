@@ -12,16 +12,16 @@ module testbench;
     logic [7:0] m_tdata;
 
     stream_multiplier #(
-        .width(width),
-        .depth(depth)
+        .width(8),
+        .depth(128)
     ) DUT (
-        .CLK(CLK),
-        .LOAD1(LOAD1),
-        .LOAD2(LOAD2),
-        .RESET(RESET),
-        .DIN(DIN),
-        .DOUT(DOUT),
-        .OE(OE)
+        .CLK    (clk),
+        .LOAD1  (s_tfirst1),
+        .LOAD2  (s_tfirst2),
+        .RESET  (areset),
+        .DIN    (s_tdata),
+        .DOUT   (m_tdata),
+        .OE     (m_tvalid)
     );
 
     parameter CLK_PEROID = 10;
