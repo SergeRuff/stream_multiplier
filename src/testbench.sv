@@ -264,9 +264,9 @@ module testbench;
         endtask
     endclass
 
-    class slave_driver;
-        //
-    endclass
+    // class slave_driver;
+    //     //
+    // endclass
 
     class slave_agent;
         //
