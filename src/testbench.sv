@@ -35,6 +35,7 @@ module testbench;
 
     class output_data_sample;
         logic [7:0] tdata;
+        logic       tlast;
     endclass
 
     task reset();
@@ -256,11 +257,14 @@ module testbench;
         endtask
 
         virtual task monitor_slave();
+            int sample_counter = 0;
             output_data_sample ds;
             @(posedge clk);
             if(m_tvalid)    begin
                 ds = new();
+                sample_counter++;
                 ds.tdata = m_tdata;
+                ds.tlast = (sample_counter==128-1);
                 out_mbx.put(ds);
             end
         endtask
