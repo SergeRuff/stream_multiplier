@@ -148,7 +148,8 @@ module testbench;
     endclass
 
     class master_monitor;
-        mailbox#(input_data_sample) in_mbx;
+        mailbox#(input_data_sample) in1_mbx;
+        mailbox#(input_data_sample) in2_mbx;
 
         virtual task run();
             forever begin
@@ -172,7 +173,8 @@ module testbench;
                 ds.delay = '0;
                 ds.s_tfirst1 = s_tfirst1;
                 ds.s_tfirst2 = s_tfirst2;
-                in_mbx.put(ds);
+                if(s_tfirst1) in1_mbx.put(ds);
+                if(s_tfirst2) in2_mbx.put(ds);
             end
         endtask
     endclass
