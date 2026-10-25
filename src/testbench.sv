@@ -289,7 +289,62 @@ module testbench;
     endclass
 
     class result_checker;
-        //
+        test_cfg cfg;
+
+        bit done;
+
+        mailbox#(input_data_sample) in1_mbx;
+        mailbox#(input_data_sample) in2_mbx;
+        mailbox#(output_data_sample) out_mbx;
+
+        virtual task run();
+            do_check();
+        endtask
+
+        virtual task check(input_data_sample in1, input_data_sample in2, output_data_sample out);
+            if ((in1.s_tdata*in2.s_tdata) !== out.tdata)    begin
+                $error(
+                    "Invalid multiplication result: Recieved: %0d, Expected: %0d * %0d = %0d",
+                    out.tdata,
+                    in1.s_tdata,
+                    in2.s_tdata,
+                    in1.s_tdata*in2.s_tdata
+                    );
+            end
+        endtask
+
+        virtual task do_check();
+            int cnt;
+            input_data_sample in1_ds, in2_ds;
+            output_data_sample out_ds;
+
+            forever begin
+                wait(!areset);
+                wait(m_tvalid);
+                fork
+                    forever begin
+                        in1_mbx.get(in1_ds);
+                        in2_mbx.get(in2_ds);
+                        out_mbx.get(out_ds);
+                        check(in1_ds, in2_ds, out_ds);
+                        cnt = cnt + out_ds.tlast;
+                        if(cnt == cfg.master_pkt_amount) break;
+                    end
+                    begin
+                       wait(areset);
+                    end
+                join_any
+                disable fork;
+                if(cnt == cfg.master_pkt_amount)    begin
+                    done = 1;
+                    break;
+                end
+                while (in1_mbx.try_get(in1_ds)) cnt = cnt;
+                while (in2_mbx.try_get(in2_ds)) cnt = cnt;
+                while (out_mbx.try_get(out_ds)) cnt = cnt;
+            end
+
+        endtask
     endclass
 
     class env;
