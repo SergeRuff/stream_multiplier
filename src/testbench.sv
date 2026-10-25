@@ -327,7 +327,7 @@ module testbench;
 
         virtual task get_straight_mailbox_queue(
             input mailbox#(input_data_sample) mailbox_with_straight_queue,
-            output input_data_sample straight_zero_padded_mailbox_queue[$]
+            ref input_data_sample straight_zero_padded_mailbox_queue[$]
             );
 
             input_data_sample tmp;
@@ -347,7 +347,7 @@ module testbench;
 
         virtual task get_reversed_mailbox_queue(
             input mailbox#(input_data_sample) mailbox_with_straight_queue,
-            output input_data_sample reversed_mailbox_queue[$]
+            ref input_data_sample reversed_mailbox_queue[$]
             );
 
             input_data_sample tmp;
