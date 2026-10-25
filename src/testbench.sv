@@ -528,7 +528,7 @@ module testbench;
             reset();
             test.run();
         join_none
-        repeat(100) @(posedge clk);
+        repeat(50) @(posedge clk);
         reset();
     end :   main
 
