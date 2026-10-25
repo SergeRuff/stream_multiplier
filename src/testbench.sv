@@ -238,7 +238,30 @@ module testbench;
     endclass
 
     class slave_monitor;
-        //
+        mailbox#(output_data_sample) out_mbx;
+
+        virtual task run();
+            forever begin
+                wait(!areset);
+                fork
+                    forever begin
+                        monitor_slave();
+                    end
+                join_none
+                wait(areset);
+                disable fork;
+            end
+        endtask
+
+        virtual task monitor_slave();
+            output_data_sample ds;
+            @(posedge clk);
+            if(m_tvalid)    begin
+                ds = new();
+                ds.tdata = m_tdata;
+                out_mbx.put(ds);
+            end
+        endtask
     endclass
 
     class slave_driver;
