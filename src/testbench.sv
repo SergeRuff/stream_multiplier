@@ -218,7 +218,23 @@ module testbench;
     endclass
 
     class master_agent;
-        //
+        master_gen  master_gen;
+        master_driver master_driver;
+        master_monitor master_monitor;
+
+        function new();
+            master_gen = new();
+            master_driver = new();
+            master_monitor = new();
+        endfunction
+
+        virtual task run();
+            fork
+                master_gen.run();
+                master_driver.run();
+                master_monitor.run();
+            join
+        endtask
     endclass
 
     class slave_monitor;
