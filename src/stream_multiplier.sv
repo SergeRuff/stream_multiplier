@@ -1,7 +1,7 @@
 module stream_multiplier
 # (
     parameter width = 8,
-    parameter depth = 10
+    parameter depth = 128
 )
 (
                             input                      CLK,
