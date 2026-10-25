@@ -40,7 +40,10 @@ module testbench;
     endtask
 
     task clock_generation();
-        //
+        clk <= 0;
+        forever begin
+            #(CLK_PEROID/2) clk <= ~clk;
+        end
     endtask
 
     class test_cfg;
