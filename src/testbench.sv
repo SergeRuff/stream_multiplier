@@ -64,6 +64,10 @@ module testbench;
         );
             string str;
 
+            if (master_samples_amount_min > master_samples_amount_max || master_delay_min > master_delay_max) begin
+                $fatal(1, "[test_cfg] Error: min value is greater than max value!");
+            end
+
             this.master_samples_amount_min = master_samples_amount_min;
             this.master_samples_amount_max = master_samples_amount_max;
             this.master_delay_min = master_delay_min;
