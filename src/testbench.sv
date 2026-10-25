@@ -34,7 +34,9 @@ module testbench;
     endclass
 
     task reset();
-        //
+        areset <= 1;
+        #(CLK_PEROID);
+        areset <= 0;
     endtask
 
     task clock_generation();
