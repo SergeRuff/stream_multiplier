@@ -368,7 +368,53 @@ module testbench;
     endclass
 
     class test;
-        //
+        test_cfg cfg;
+
+        env env;
+
+        mailbox#(input_data_sample)  gen2drv;
+        mailbox#(input_data_sample)  in1_mbx;
+        mailbox#(input_data_sample)  in2_mbx;
+        mailbox#(output_data_sample) out_mbx;
+
+        function new();
+            cfg = new();
+            env = new();
+            gen2drv = new();
+            in1_mbx  = new();
+            in2_mbx  = new();
+            out_mbx = new();
+
+            env.master.master_gen.cfg = cfg;
+            env.check.cfg = cfg;
+
+            env.master.master_gen.gen2drv = gen2drv;
+            env.master.master_driver.gen2drv = gen2drv;
+            env.master.master_monitor.in1_mbx = in1_mbx;
+            env.master.master_monitor.in2_mbx = in2_mbx;
+            env.slave.slave_monitor.out_mbx = out_mbx;
+
+            env.check.in1_mbx = in1_mbx;
+            env.check.in2_mbx = in2_mbx;
+            env.check.out_mbx = out_mbx;
+        endfunction
+
+        virtual task run();
+            bit done;
+            fork
+                env.run();
+                timeout();
+            join_none
+            wait(env.check.done);
+            $display("Test was finished");
+            $finish();
+        endtask
+
+        task timeout();
+            repeat(cfg.test_timeout_cycles) @(posedge clk);
+            $error("FAIL: Test timeout!");
+            $finish();
+        endtask
     endclass
 
     initial begin   :   main
