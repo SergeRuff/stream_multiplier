@@ -249,10 +249,12 @@ module testbench;
 
     class slave_monitor;
         mailbox#(output_data_sample) out_mbx;
+        int sample_counter = 0;
 
         virtual task run();
             forever begin
                 wait(!areset);
+                sample_counter = 0;
                 fork
                     forever begin
                         monitor_slave();
@@ -264,7 +266,6 @@ module testbench;
         endtask
 
         virtual task monitor_slave();
-            int sample_counter = 0;
             output_data_sample ds;
             @(posedge clk);
             if(m_tvalid)    begin
