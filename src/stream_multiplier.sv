@@ -4,14 +4,14 @@ module stream_multiplier
     parameter depth = 10
 )
 (
-                            input                CLK,
-                            input                LOAD1,
-                            input                LOAD2,
-                            input                RESET,
-                            input  [0:width - 1] DIN,
+                            input                      CLK,
+                            input                      LOAD1,
+                            input                      LOAD2,
+                            input                      RESET,
+                            input        [0:width - 1] DIN,
 
-                            output [width - 1:0] DOUT,
-                            output               OE
+                            output logic [width - 1:0] DOUT,
+                            output logic               OE
                         );
 
     localparam counter_width = $clog2(depth + 1);
