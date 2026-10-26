@@ -6,6 +6,11 @@ project.sigasi
 *.out
 *.txt
 
+# ModelSim Simulation artifacts
+**/work/
+transcript
+**/*.wlf
+
 # Waveform diagrams (except final)
 *.vcd
 !**/final.vcd
