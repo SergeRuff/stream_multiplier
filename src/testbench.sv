@@ -11,7 +11,7 @@ module testbench;
     logic       m_tvalid;
     logic [7:0] m_tdata;
 
-    stream_multiplier #(
+    stream_multiplier_top #(
         .width(8),
         .depth(128)
     ) DUT (

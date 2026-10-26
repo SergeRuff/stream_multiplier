@@ -1,4 +1,4 @@
-module stream_multiplier
+module stream_multiplier_top
 # (
     parameter width = 8,
     parameter depth = 128
