@@ -1,191 +1,103 @@
-<svg host="65bd71144e" xmlns="http://www.w3.org/2000/svg" style="background: transparent; background-color: transparent; color-scheme: light;" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="642px" height="522px" viewBox="0 0 642 522" content="&lt;mxfile&gt;&lt;diagram id=&quot;arch&quot; name=&quot;Architecture&quot;&gt;1ZZdb5swFIZ/DdJ6BzgQctkktJuUKhO062XkgA3WACPjNMl+/Y6DITDY0o9s0m6inPf4HNvvYyc20CI/3Atcpg88Jplhm/HBQEvDtj3Hg08lHGvBMk2nVhLBYq2dhZD9IM1Are5YTKreQMl5JlnZFyNeFCSSPQ0Lwff9YZRn/VlLnJCBEEY4G6rPLJZprc5M86x/JixJ9cyOpxM5bsZqoUpxzPcdCfkGWgjOZf0tPyxIprxrbKnr7n6TbdclSCFfUyB5OSzRXSp5bPYr+K6IiaqxDDTfp0ySsMSRyu6BMGipzDOdfiFCMvDqNmNJAZqaA80pL2SoO1pNXIO1JipmWbbgGRenGRH16Ixi0Csp+HfSybjR1JnCUuYxrtJ2TRUshxXJo5pr6YBQ7+EFZzu9B2hEcL7Jd+qYZIyITbt5tWJy6Gxem3VPeE6kOMKQtIuzobc/s3cnWmvaIB3rI96EWJ+8pG19pgNfNKBxWNsdHQH8QVq/+B5j4tFo3HePbOkFkmjMeVg3JQLW6UIbuMJo/okXpEq53NSpm04q8L/5QehDh1Nxc6XeiMiyhojaXrqNPekj8q6DyP5/EdnvQ2T9M0RXuUa0yv82IkqpHY0iit2t67jvQXQXPijHbRfn5SlvLqBEcLW1FU9Y1IUXPm6+LFeACNwwIVitb2GWbmSforYC1KevSt8Efvi0emzH+kGwDm6uRhi5fyY8Ma9AWP3GvwYxVMGLgVzGi6uyfkZQdlBHYnAlHeLFkzHenr1F7gXeysghb2OBjNn0fX9QQ9+dvu2O27fd8pyP2y5Ison57lXWn2+X+ebbRSzwezrm9sydInzpdo26vVw/wZk3A5Jcy3Gv77h7BcchPD8NT7nO+xr5PwE=&lt;/diagram&gt;&lt;/mxfile&gt;">
-    <defs/>
-    <g>
-        <g data-cell-id="0">
-            <g data-cell-id="1">
-                <g data-cell-id="top">
-                    <g transform="translate(0.5,0.5)">
-                        <rect x="0" y="0" width="640" height="520" rx="78" ry="78" fill="#f8f9fa" stroke="#6c757d" stroke-dasharray="3 3" pointer-events="all" style="fill: light-dark(rgb(248, 249, 250), rgb(22, 23, 24)); stroke: light-dark(rgb(108, 117, 125), rgb(132, 139, 146));"/>
-                    </g>
-                    <g>
-                        <g>
-                            <switch>
-                                <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe flex-start; justify-content: unsafe center; width: 638px; height: 1px; padding-top: 12px; margin-left: 1px;">
-                                        <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
-                                            <div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; font-weight: bold; white-space: normal; word-wrap: normal; ">
-                                                stream_multiplier_top
-                                            </div>
-                                        </div>
-                                    </div>
-                                </foreignObject>
-                                <text x="320" y="26" fill="#000000" font-family="Helvetica" font-size="14px" text-anchor="middle" font-weight="bold" style="fill: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));">
-                                    stream_multiplier_top
-                                </text>
-                            </switch>
-                        </g>
-                    </g>
-                </g>
-                <g data-cell-id="buf1">
-                    <g transform="translate(0.5,0.5)">
-                        <rect x="110" y="50" width="200" height="110" rx="16.5" ry="16.5" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
-                    </g>
-                    <g>
-                        <g>
-                            <switch>
-                                <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 198px; height: 1px; padding-top: 105px; margin-left: 111px;">
-                                        <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
-                                            <div style="display: inline-block; font-size: 13px; font-family: Helvetica; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; font-weight: bold; white-space: normal; word-wrap: normal; ">
-                                                buffer1
-                                                <br/>
-                                                (oneshot_buffer)
-                                                <br/>
-                                                REVERSE = 0
-                                            </div>
-                                        </div>
-                                    </div>
-                                </foreignObject>
-                                <text x="210" y="93" fill="#000000" font-family="Helvetica" font-size="13px" text-anchor="middle" font-weight="bold" style="fill: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));">
-                                    <tspan x="210" y="93">
-                                        buffer1
-                                    </tspan>
-                                    <tspan x="210" y="109">
-                                        (oneshot_buffer)
-                                    </tspan>
-                                    <tspan x="210" y="125">
-                                        REVERSE = 0
-                                    </tspan>
-                                </text>
-                            </switch>
-                        </g>
-                    </g>
-                </g>
-                <g data-cell-id="buf2">
-                    <g transform="translate(0.5,0.5)">
-                        <rect x="110" y="200" width="200" height="110" rx="16.5" ry="16.5" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
-                    </g>
-                    <g>
-                        <g>
-                            <switch>
-                                <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 198px; height: 1px; padding-top: 255px; margin-left: 111px;">
-                                        <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
-                                            <div style="display: inline-block; font-size: 13px; font-family: Helvetica; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; font-weight: bold; white-space: normal; word-wrap: normal; ">
-                                                buffer2
-                                                <br/>
-                                                (oneshot_buffer)
-                                                <br/>
-                                                REVERSE = 1
-                                            </div>
-                                        </div>
-                                    </div>
-                                </foreignObject>
-                                <text x="210" y="243" fill="#000000" font-family="Helvetica" font-size="13px" text-anchor="middle" font-weight="bold" style="fill: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));">
-                                    <tspan x="210" y="243">
-                                        buffer2
-                                    </tspan>
-                                    <tspan x="210" y="259">
-                                        (oneshot_buffer)
-                                    </tspan>
-                                    <tspan x="210" y="275">
-                                        REVERSE = 1
-                                    </tspan>
-                                </text>
-                            </switch>
-                        </g>
-                    </g>
-                </g>
-                <g data-cell-id="fsm">
-                    <g transform="translate(0.5,0.5)">
-                        <rect x="110" y="370" width="360" height="110" rx="16.5" ry="16.5" fill="#fff2cc" stroke="#d6b656" pointer-events="all" style="fill: light-dark(rgb(255, 242, 204), rgb(40, 29, 0)); stroke: light-dark(rgb(214, 182, 86), rgb(109, 81, 0));"/>
-                    </g>
-                    <g>
-                        <g>
-                            <switch>
-                                <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 358px; height: 1px; padding-top: 425px; margin-left: 111px;">
-                                        <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
-                                            <div style="display: inline-block; font-size: 13px; font-family: Helvetica; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; font-weight: bold; white-space: normal; word-wrap: normal; ">
-                                                FSM &amp; Control Logic
-                                                <br/>
-                                                (ST_IDLE, ST_LOAD1, ST_LOAD2,
-                                                <br/>
-                                                ST_UPLOAD_RESULT, ST_ERROR)
-                                            </div>
-                                        </div>
-                                    </div>
-                                </foreignObject>
-                                <text x="290" y="413" fill="#000000" font-family="Helvetica" font-size="13px" text-anchor="middle" font-weight="bold" style="fill: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));">
-                                    <tspan x="290" y="413">
-                                        FSM &amp; Control Logic
-                                    </tspan>
-                                    <tspan x="290" y="429">
-                                        (ST_IDLE, ST_LOAD1, ST_LOAD2,
-                                    </tspan>
-                                    <tspan x="290" y="445">
-                                        ST_UPLOAD_RESULT, ST_ERROR)
-                                    </tspan>
-                                </text>
-                            </switch>
-                        </g>
-                    </g>
-                </g>
-                <g data-cell-id="mult">
-                    <g transform="translate(0.5,0.5)">
-                        <ellipse cx="455" cy="180" rx="25" ry="25" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
-                    </g>
-                    <g>
-                        <g>
-                            <switch>
-                                <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 48px; height: 1px; padding-top: 180px; margin-left: 431px;">
-                                        <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
-                                            <div style="display: inline-block; font-size: 22px; font-family: Helvetica; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; font-weight: bold; white-space: normal; word-wrap: normal; ">
-                                                ×
-                                            </div>
-                                        </div>
-                                    </div>
-                                </foreignObject>
-                                <text x="455" y="187" fill="#000000" font-family="Helvetica" font-size="22px" text-anchor="middle" font-weight="bold" style="fill: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));">
-                                    ×
-                                </text>
-                            </switch>
-                        </g>
-                    </g>
-                </g>
-                <g data-cell-id="reg_dout">
-                    <g transform="translate(0.5,0.5)">
-                        <rect x="530" y="155" width="80" height="50" fill="#e1d5e7" stroke="#9673a6" pointer-events="all" style="fill: light-dark(rgb(225, 213, 231), rgb(57, 47, 63)); stroke: light-dark(rgb(150, 115, 166), rgb(149, 119, 163));"/>
-                    </g>
-                    <g>
-                        <g>
-                            <switch>
-                                <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
-                                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 78px; height: 1px; padding-top: 180px; margin-left: 531px;">
-                                        <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
-                                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; font-weight: bold; white-space: normal; word-wrap: normal; ">
-                                                DOUT Reg
-                                            </div>
-                                        </div>
-                                    </div>
-                                </foreignObject>
-                                <text x="570" y="184" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle" font-weight="bold" style="fill: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));">
-                                    DOUT Reg
-                                </text>
-                            </switch>
-                        </g>
-                    </g>
-                </g>
-            </g>
-        </g>
-    </g>
-    <switch>
-        <g requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"/>
-        <a transform="translate(0,-5)" xlink:href="https://www.drawio.com/doc/faq/svg-export-text-problems" target="_blank">
-            <text text-anchor="middle" font-size="10px" x="50%" y="100%">
-                Text is not SVG - cannot display
-            </text>
-        </a>
-    </switch>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1060px" height="480px" viewBox="0 0 1060 480" content="&lt;mxfile host=&quot;65bd71144e&quot;&gt;&lt;diagram id=&quot;arch&quot; name=&quot;Architecture&quot;&gt;&lt;mxGraphModel dx=&quot;1100&quot; dy=&quot;650&quot; grid=&quot;1&quot; gridSize=&quot;10&quot; guides=&quot;1&quot; tooltips=&quot;1&quot; connect=&quot;1&quot; arrows=&quot;1&quot; fold=&quot;1&quot; page=&quot;1&quot; pageScale=&quot;1&quot; pageWidth=&quot;1060&quot; pageHeight=&quot;480&quot; math=&quot;0&quot; shadow=&quot;0&quot;&gt;&lt;root&gt;&lt;mxCell id=&quot;0&quot;/&gt;&lt;mxCell id=&quot;1&quot; parent=&quot;0&quot;/&gt;&lt;mxCell id=&quot;top&quot; value=&quot;stream_multiplier_top&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1;fontSize=14;fillColor=#f8f9fa;strokeColor=#6c757d;dashed=1;spacingTop=5;arcSize=6;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;140&quot; y=&quot;20&quot; width=&quot;780&quot; height=&quot;430&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;fsm&quot; value=&quot;FSM &amp;amp; Control Logic&amp;#xa;(ST_IDLE, ST_LOAD1, ST_LOAD2,&amp;#xa;ST_UPLOAD_RESULT, ST_ERROR)&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=13;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;180&quot; y=&quot;160&quot; width=&quot;250&quot; height=&quot;120&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;buf1&quot; value=&quot;buffer1&amp;#xa;(oneshot_buffer)&amp;#xa;REVERSE = 0&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=13;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;520&quot; y=&quot;70&quot; width=&quot;190&quot; height=&quot;110&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;buf2&quot; value=&quot;buffer2&amp;#xa;(oneshot_buffer)&amp;#xa;REVERSE = 1&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=13;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;520&quot; y=&quot;260&quot; width=&quot;190&quot; height=&quot;110&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;mult&quot; value=&quot;×&quot; style=&quot;ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=22;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;750&quot; y=&quot;195&quot; width=&quot;50&quot; height=&quot;50&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;reg_dout&quot; value=&quot;DOUT Reg&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;825&quot; y=&quot;195&quot; width=&quot;75&quot; height=&quot;50&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;reg_oe&quot; value=&quot;OE Reg&quot; style=&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;825&quot; y=&quot;385&quot; width=&quot;75&quot; height=&quot;40&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;in_din&quot; value=&quot;DIN[0:width-1]&quot; style=&quot;text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontStyle=1;fontColor=#0066CC;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;20&quot; y=&quot;35&quot; width=&quot;110&quot; height=&quot;30&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;in_clk&quot; value=&quot;CLK, RESET&quot; style=&quot;text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontStyle=1;fontColor=#333333;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;30&quot; y=&quot;175&quot; width=&quot;100&quot; height=&quot;30&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;in_load&quot; value=&quot;LOAD1, LOAD2&quot; style=&quot;text;html=1;align=right;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontStyle=1;fontColor=#b85450;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;20&quot; y=&quot;235&quot; width=&quot;110&quot; height=&quot;30&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;out_dout&quot; value=&quot;DOUT[width-1:0]&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontStyle=1;fontColor=#0066CC;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;945&quot; y=&quot;205&quot; width=&quot;115&quot; height=&quot;30&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;out_oe&quot; value=&quot;OE&quot; style=&quot;text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontStyle=1;fontColor=#b85450;fontSize=12;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;945&quot; y=&quot;390&quot; width=&quot;40&quot; height=&quot;30&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;e_din_b1&quot; value=&quot;write_data&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0066CC;strokeWidth=2;fontColor=#0066CC;fontSize=11;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;&lt;mxPoint x=&quot;130&quot; y=&quot;50&quot; as=&quot;sourcePoint&quot;/&gt;&lt;mxPoint x=&quot;520&quot; y=&quot;90&quot; as=&quot;targetPoint&quot;/&gt;&lt;Array as=&quot;points&quot;&gt;&lt;mxPoint x=&quot;480&quot; y=&quot;50&quot;/&gt;&lt;mxPoint x=&quot;480&quot; y=&quot;90&quot;/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;e_din_b2&quot; value=&quot;write_data&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0066CC;strokeWidth=2;fontColor=#0066CC;fontSize=11;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;&lt;mxPoint x=&quot;480&quot; y=&quot;50&quot; as=&quot;sourcePoint&quot;/&gt;&lt;mxPoint x=&quot;520&quot; y=&quot;280&quot; as=&quot;targetPoint&quot;/&gt;&lt;Array as=&quot;points&quot;&gt;&lt;mxPoint x=&quot;480&quot; y=&quot;280&quot;/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;e_b1_mult&quot; value=&quot;data_out&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;entryX=0.5;entryY=0;strokeColor=#0066CC;strokeWidth=2;fontColor=#0066CC;fontSize=11;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;buf1&quot; target=&quot;mult&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;e_b2_mult&quot; value=&quot;data_out&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;entryX=0.5;entryY=1;strokeColor=#0066CC;strokeWidth=2;fontColor=#0066CC;fontSize=11;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;buf2&quot; target=&quot;mult&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;e_mult_reg&quot; value=&quot;&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#0066CC;strokeWidth=2;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;mult&quot; target=&quot;reg_dout&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;e_reg_dout&quot; value=&quot;&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;strokeColor=#0066CC;strokeWidth=2;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;reg_dout&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;&lt;mxPoint x=&quot;945&quot; y=&quot;220&quot; as=&quot;targetPoint&quot;/&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;e_clk_fsm&quot; value=&quot;&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.25;strokeColor=#333333;strokeWidth=2;&quot; edge=&quot;1&quot; parent=&quot;1&quot; target=&quot;fsm&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;&lt;mxPoint x=&quot;130&quot; y=&quot;190&quot; as=&quot;sourcePoint&quot;/&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;e_load_fsm&quot; value=&quot;&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.75;strokeColor=#b85450;strokeWidth=2;&quot; edge=&quot;1&quot; parent=&quot;1&quot; target=&quot;fsm&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;&lt;mxPoint x=&quot;130&quot; y=&quot;250&quot; as=&quot;sourcePoint&quot;/&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;e_fsm_b1&quot; value=&quot;push, pop, rst&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;entryX=0;entryY=0.45;strokeColor=#b85450;strokeWidth=1.5;fontColor=#b85450;fontSize=11;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;fsm&quot; target=&quot;buf1&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;&lt;Array as=&quot;points&quot;&gt;&lt;mxPoint x=&quot;305&quot; y=&quot;120&quot;/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;e_b1_fsm&quot; value=&quot;almost_empty, err&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;entryX=0.75;entryY=0;strokeColor=#555555;strokeWidth=1.5;dashed=1;fontColor=#333333;fontSize=11;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;buf1&quot; target=&quot;fsm&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;&lt;Array as=&quot;points&quot;&gt;&lt;mxPoint x=&quot;368&quot; y=&quot;153&quot;/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;e_fsm_b2&quot; value=&quot;push, pop, rst&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.55;strokeColor=#b85450;strokeWidth=1.5;fontColor=#b85450;fontSize=11;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;fsm&quot; target=&quot;buf2&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;&lt;Array as=&quot;points&quot;&gt;&lt;mxPoint x=&quot;305&quot; y=&quot;320&quot;/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;e_b2_fsm&quot; value=&quot;almost_empty, err&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.25;entryX=0.75;entryY=1;strokeColor=#555555;strokeWidth=1.5;dashed=1;fontColor=#333333;fontSize=11;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;buf2&quot; target=&quot;fsm&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;&lt;Array as=&quot;points&quot;&gt;&lt;mxPoint x=&quot;368&quot; y=&quot;288&quot;/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;e_fsm_oe&quot; value=&quot;state == ST_UPLOAD_RESULT&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;entryX=0;entryY=0.5;strokeColor=#b85450;strokeWidth=1.5;fontColor=#b85450;fontSize=11;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;fsm&quot; target=&quot;reg_oe&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;&lt;Array as=&quot;points&quot;&gt;&lt;mxPoint x=&quot;243&quot; y=&quot;405&quot;/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;e_fsm_dout&quot; value=&quot;state ctrl&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;entryX=0.5;entryY=1;strokeColor=#b85450;strokeWidth=1.5;dashed=1;fontColor=#b85450;fontSize=11;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;fsm&quot; target=&quot;reg_dout&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;&lt;Array as=&quot;points&quot;&gt;&lt;mxPoint x=&quot;455&quot; y=&quot;220&quot;/&gt;&lt;mxPoint x=&quot;455&quot; y=&quot;390&quot;/&gt;&lt;mxPoint x=&quot;863&quot; y=&quot;390&quot;/&gt;&lt;/Array&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;e_reg_oe&quot; value=&quot;&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;strokeColor=#b85450;strokeWidth=2;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;reg_oe&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;&lt;mxPoint x=&quot;945&quot; y=&quot;405&quot; as=&quot;targetPoint&quot;/&gt;&lt;/mxGeometry&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;&lt;/diagram&gt;&lt;/mxfile&gt;">
+  <defs>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0066cc"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrow-dark" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#333333"/>
+    </marker>
+  </defs>
+
+  <rect width="100%" height="100%" fill="#ffffff"/>
+
+  <!-- Top Container -->
+  <rect x="140" y="20" width="780" height="430" rx="20" ry="20" fill="#f8f9fa" stroke="#6c757d" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <text x="530" y="42" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#000000" text-anchor="middle">stream_multiplier_top</text>
+
+  <!-- FSM Block -->
+  <rect x="180" y="160" width="250" height="120" rx="16" ry="16" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+  <text x="305" y="205" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#000000" text-anchor="middle">FSM &amp; Control Logic</text>
+  <text x="305" y="223" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333333" text-anchor="middle">(ST_IDLE, ST_LOAD1, ST_LOAD2,</text>
+  <text x="305" y="240" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333333" text-anchor="middle">ST_UPLOAD_RESULT, ST_ERROR)</text>
+
+  <!-- Buffer 1 -->
+  <rect x="520" y="70" width="190" height="110" rx="16" ry="16" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="615" y="112" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#000000" text-anchor="middle">buffer1</text>
+  <text x="615" y="128" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#000000" text-anchor="middle">(oneshot_buffer)</text>
+  <text x="615" y="144" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#000000" text-anchor="middle">REVERSE = 0</text>
+
+  <!-- Buffer 2 -->
+  <rect x="520" y="260" width="190" height="110" rx="16" ry="16" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="615" y="302" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#000000" text-anchor="middle">buffer2</text>
+  <text x="615" y="318" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#000000" text-anchor="middle">(oneshot_buffer)</text>
+  <text x="615" y="334" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#000000" text-anchor="middle">REVERSE = 1</text>
+
+  <!-- Multiplier -->
+  <circle cx="775" cy="220" r="25" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="775" y="227" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="bold" fill="#000000" text-anchor="middle">×</text>
+
+  <!-- DOUT Reg -->
+  <rect x="825" y="195" width="75" height="50" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+  <text x="862" y="224" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#000000" text-anchor="middle">DOUT Reg</text>
+
+  <!-- OE Reg -->
+  <rect x="825" y="385" width="75" height="40" fill="#f8cecc" stroke="#b85450" stroke-width="1.5"/>
+  <text x="862" y="409" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#000000" text-anchor="middle">OE Reg</text>
+
+  <!-- ================= DATA PATH (BLUE) ================= -->
+  <text x="125" y="54" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#0066cc" text-anchor="end">DIN[0:width-1]</text>
+  <path d="M 130 50 L 480 50 L 480 90 L 518 90" fill="none" stroke="#0066cc" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <path d="M 480 50 L 480 280 L 518 280" fill="none" stroke="#0066cc" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <circle cx="480" cy="90" r="3" fill="#0066cc"/>
+  <text x="485" y="84" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#0066cc">write_data</text>
+  <text x="485" y="274" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#0066cc">write_data</text>
+
+  <!-- buf1 & buf2 -> mult -->
+  <path d="M 710 125 L 775 125 L 775 193" fill="none" stroke="#0066cc" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <text x="742" y="118" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#0066cc" text-anchor="middle">data_out</text>
+
+  <path d="M 710 315 L 775 315 L 775 247" fill="none" stroke="#0066cc" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <text x="742" y="308" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#0066cc" text-anchor="middle">data_out</text>
+
+  <!-- mult -> DOUT Reg -> DOUT -->
+  <line x1="800" y1="220" x2="823" y2="220" stroke="#0066cc" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <line x1="900" y1="220" x2="942" y2="220" stroke="#0066cc" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <text x="948" y="224" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#0066cc">DOUT[width-1:0]</text>
+
+  <!-- ================= CONTROL & STATUS PATH ================= -->
+  <!-- Inputs to FSM -->
+  <text x="125" y="194" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333333" text-anchor="end">CLK, RESET</text>
+  <line x1="130" y1="190" x2="178" y2="190" stroke="#333333" stroke-width="2" marker-end="url(#arrow-dark)"/>
+
+  <text x="125" y="254" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#b85450" text-anchor="end">LOAD1, LOAD2</text>
+  <line x1="130" y1="250" x2="178" y2="250" stroke="#b85450" stroke-width="2" marker-end="url(#arrow-red)"/>
+
+  <!-- FSM <-> Buffer 1 -->
+  <path d="M 305 160 L 305 120 L 518 120" fill="none" stroke="#b85450" stroke-width="1.5" marker-end="url(#arrow-red)"/>
+  <text x="395" y="114" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#b85450" text-anchor="middle">push, pop, rst</text>
+
+  <path d="M 520 153 L 368 153 L 368 158" fill="none" stroke="#555555" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow-dark)"/>
+  <text x="440" y="147" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">almost_empty, err</text>
+
+  <!-- FSM <-> Buffer 2 -->
+  <path d="M 305 280 L 305 320 L 518 320" fill="none" stroke="#b85450" stroke-width="1.5" marker-end="url(#arrow-red)"/>
+  <text x="395" y="335" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#b85450" text-anchor="middle">push, pop, rst</text>
+
+  <path d="M 520 288 L 368 288 L 368 282" fill="none" stroke="#555555" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow-dark)"/>
+  <text x="440" y="302" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">almost_empty, err</text>
+
+  <!-- FSM -> DOUT Reg & OE Reg -->
+  <path d="M 430 220 L 455 220 L 455 380 L 862 380 L 862 247" fill="none" stroke="#b85450" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow-red)"/>
+  <text x="775" y="374" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#b85450" text-anchor="middle">state ctrl</text>
+
+  <path d="M 243 280 L 243 405 L 823 405" fill="none" stroke="#b85450" stroke-width="1.5" marker-end="url(#arrow-red)"/>
+  <text x="530" y="420" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#b85450" text-anchor="middle">state / next_state == ST_UPLOAD_RESULT</text>
+
+  <line x1="900" y1="405" x2="942" y2="405" stroke="#b85450" stroke-width="2" marker-end="url(#arrow-red)"/>
+  <text x="948" y="409" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#b85450">OE</text>
 </svg>
