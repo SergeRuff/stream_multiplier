@@ -232,7 +232,7 @@ module testbench;
             if (ds.s_tlast) begin
                 s_tfirst1 <= '0;
                 s_tfirst2 <= '0;
-                repeat(3) @(posedge clk);
+                repeat(2) @(posedge clk);
                 while(m_tvalid) @(posedge clk);
             end
         endtask

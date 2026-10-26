@@ -100,7 +100,7 @@ module stream_multiplier
             ST_LOAD1:           if     (err)                                                     next_state = ST_ERROR;
                                 else if(LOAD2 & !illegal_state_flag)                             next_state = ST_LOAD2;
             ST_LOAD2:           if     (err)                                                     next_state = ST_ERROR;
-                                else if(!LOAD2)                                                  next_state = ST_UPLOAD_RESULT; 
+                                else if(!LOAD1 & !LOAD2)                                         next_state = ST_UPLOAD_RESULT; 
             ST_UPLOAD_RESULT:   if     (err)                                                     next_state = ST_ERROR;
                                 else if(buffer1_almost_empty_flag & buffer2_almost_empty_flag)   next_state = ST_IDLE;
             ST_ERROR:           if     (!err & !LOAD1 & !LOAD2)                                  next_state = ST_IDLE;
@@ -127,8 +127,8 @@ module stream_multiplier
                                        {buffer2_pop, buffer2_rst, buffer2_push} = {1'b0, 1'b1, 1'b0};                           end
             ST_LOAD1:         begin    {buffer1_pop, buffer1_rst, buffer1_push} = {1'b0, RESET, (LOAD1 & !illegal_state_flag)};
                                        {buffer2_pop, buffer2_rst, buffer2_push} = {1'b0, RESET, (LOAD2 & !illegal_state_flag)}; end
-            ST_LOAD2:         begin    {buffer1_pop, buffer1_rst, buffer1_push} = {1'b0, RESET, 1'b0};
-                                       {buffer2_pop, buffer2_rst, buffer2_push} = {1'b0, RESET, (LOAD2 & !illegal_state_flag)}; end
+            ST_LOAD2:         begin    {buffer1_pop, buffer1_rst, buffer1_push} = {(!LOAD1 & !LOAD2), RESET, 1'b0};
+                                       {buffer2_pop, buffer2_rst, buffer2_push} = {(!LOAD1 & !LOAD2), RESET, (LOAD2 & !illegal_state_flag)}; end
             ST_UPLOAD_RESULT: begin    {buffer1_pop, buffer1_rst, buffer1_push} = {1'b1, buffers_reload_flag | RESET, 1'b0};
                                        {buffer2_pop, buffer2_rst, buffer2_push} = {1'b1, buffers_reload_flag | RESET, 1'b0};    end
             ST_ERROR:         begin    {buffer1_pop, buffer1_rst, buffer1_push} = 3'b010;
@@ -143,7 +143,7 @@ module stream_multiplier
         else case (current_state)
             ST_IDLE:          DOUT <= 0;
             ST_LOAD1:         DOUT <= 0;
-            ST_LOAD2:         DOUT <= 0;
+            ST_LOAD2:         DOUT <= (next_state == ST_UPLOAD_RESULT)? buffer1_data_out * buffer2_data_out : 0;
             ST_UPLOAD_RESULT: DOUT <= buffer1_data_out * buffer2_data_out;
             ST_ERROR:         DOUT <= {width{1'bx}};
             default:          DOUT <= {width{1'bx}};
@@ -152,7 +152,8 @@ module stream_multiplier
 
     always @(posedge CLK) begin   :   status_flags_logic
         if (RESET)  OE <= 1'b0;
-        else        OE <= (current_state == ST_UPLOAD_RESULT);
+        else        OE <= (current_state == ST_UPLOAD_RESULT)|
+                          (next_state    == ST_UPLOAD_RESULT);
     end
 
 endmodule
