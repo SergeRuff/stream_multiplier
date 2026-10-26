@@ -515,6 +515,10 @@ module testbench;
 
     initial begin   :   main
         test test;
+
+        $dumpfile("dump.vcd");
+        $dumpvars(0, testbench);
+
         test = new();
         fork
             clock_generation();
