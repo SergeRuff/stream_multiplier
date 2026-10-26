@@ -14,3 +14,6 @@ transcript
 # Waveform diagrams (except final)
 *.vcd
 !**/final.vcd
+
+#AppData artifacts
+AppData/
