@@ -9,11 +9,12 @@ project.sigasi
 # ModelSim Simulation artifacts
 **/work/
 transcript
+!/results/transcript
 **/*.wlf
 
 # Waveform diagrams (except final)
 *.vcd
-!**/final.vcd
+!/results/*.vcd
 
 #AppData artifacts
 AppData/
