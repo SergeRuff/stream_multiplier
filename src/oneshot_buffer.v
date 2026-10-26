@@ -36,7 +36,7 @@ module oneshot_buffer
     //------------------------------------------------------------------------
 
     always @(posedge clk) begin   :   push_previous_state_register
-        if (rst)    push_reg <= '0;
+        if (rst)    push_reg <= 0;
         else        push_reg <= push;
     end
 
@@ -44,18 +44,18 @@ module oneshot_buffer
 
     always @(posedge clk)    begin   :   write_pointer_process
         if (rst)
-            wr_ptr <= '0;
+            wr_ptr <= 0;
         else if (push & !full)
             wr_ptr <= wr_ptr + 1'b1;
     end
 
     always @(posedge clk)    begin   :   read_pointer_process
         if (rst)
-            rd_ptr <= REVERSE_BUFFER_MODE? max_ptr : '0;
+            rd_ptr <= REVERSE_BUFFER_MODE? max_ptr : 0;
         else if (pop & !empty & !REVERSE_BUFFER_MODE)
-                rd_ptr <= rd_ptr == max_ptr ? '0 : rd_ptr + 1'b1;
+                rd_ptr <= rd_ptr == max_ptr ? 0 : rd_ptr + 1'b1;
         else if (pop & !empty &  REVERSE_BUFFER_MODE)
-                rd_ptr <= rd_ptr == '0 ? max_ptr : rd_ptr - 1'b1;
+                rd_ptr <= rd_ptr == 0 ? max_ptr : rd_ptr - 1'b1;
     end
 
     //------------------------------------------------------------------------
@@ -63,7 +63,7 @@ module oneshot_buffer
     always @(posedge clk)   begin   : write_data_mux
         if (rst)
             for (i = 0; i <= max_ptr; i = i + 1)  begin
-               data[i] <= '0;
+               data[i] <= 0;
             end
         else if (push & !full)
             data [wr_ptr] <= write_data;
@@ -75,11 +75,11 @@ module oneshot_buffer
 
     always @ (posedge clk) begin  :   counter_process
         if (rst)
-            cnt_reg <= '0;
+            cnt_reg <= 0;
         else if (push & !full)
             cnt_reg <= cnt_reg + 1'b1;
         else if (push_reg)
-            cnt_reg <= counter_width'(depth) - counter_width'(pop);
+            cnt_reg <= depth - pop;
         else if (pop & !empty)
             cnt_reg <= cnt_reg - 1'b1;
     end

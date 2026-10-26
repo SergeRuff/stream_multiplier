@@ -4,54 +4,51 @@ module stream_multiplier
     parameter depth = 128
 )
 (
-                            input                      CLK,
-                            input                      LOAD1,
-                            input                      LOAD2,
-                            input                      RESET,
-                            input        [0:width - 1] DIN,
+                            input                    CLK,
+                            input                    LOAD1,
+                            input                    LOAD2,
+                            input                    RESET,
+                            input      [0:width - 1] DIN,
 
-                            output logic [width - 1:0] DOUT,
-                            output logic               OE
+                            output reg [width - 1:0] DOUT,
+                            output reg               OE
                         );
 
     localparam counter_width = $clog2(depth + 1);
 
-    logic buffer1_pop;
-    logic buffer1_rst;
-    logic buffer1_push;
-    logic buffer1_full_flag;
-    logic buffer1_almost_full_flag;
-    logic buffer1_empty_flag;
-    logic buffer1_almost_empty_flag;
-    logic buffer1_error_flag;
-    logic [counter_width - 1: 0] buffer1_counter;
-    logic [width - 1:0] buffer1_data_out;
+    reg buffer1_pop;
+    reg buffer1_rst;
+    reg buffer1_push;
+    wire buffer1_full_flag;
+    wire buffer1_almost_full_flag;
+    wire buffer1_empty_flag;
+    wire buffer1_almost_empty_flag;
+    wire buffer1_error_flag;
+    wire [counter_width - 1: 0] buffer1_counter;
+    wire [width - 1:0] buffer1_data_out;
 
-    logic buffer2_pop;
-    logic buffer2_rst;
-    logic buffer2_push;
-    logic buffer2_full_flag;
-    logic buffer2_almost_full_flag;
-    logic buffer2_empty_flag;
-    logic buffer2_almost_empty_flag;
-    logic buffer2_error_flag;
-    logic [counter_width - 1: 0] buffer2_counter;
-    logic [width - 1:0] buffer2_data_out;
+    reg buffer2_pop;
+    reg buffer2_rst;
+    reg buffer2_push;
+    wire buffer2_full_flag;
+    wire buffer2_almost_full_flag;
+    wire buffer2_empty_flag;
+    wire buffer2_almost_empty_flag;
+    wire buffer2_error_flag;
+    wire [counter_width - 1: 0] buffer2_counter;
+    wire [width - 1:0] buffer2_data_out;
 
-    logic buffers_reload_flag;
-    logic illegal_state_flag;
-    logic err_reg;
-    logic err;
+    reg buffers_reload_flag;
+    wire illegal_state_flag;
+    wire err;
 
-    typedef enum logic [2:0]    {
-        ST_IDLE,
-        ST_LOAD1,
-        ST_LOAD2,
-        ST_UPLOAD_RESULT,
-        ST_ERROR
-    }   states_e;
+    localparam [2:0] ST_IDLE          = 3'd0,
+                     ST_LOAD1         = 3'd1,
+                     ST_LOAD2         = 3'd2,
+                     ST_UPLOAD_RESULT = 3'd3,
+                     ST_ERROR         = 3'd4;
 
-    states_e current_state, next_state;
+    reg [2:0] current_state, next_state;
 
     oneshot_buffer #(
         .width(width),
@@ -91,16 +88,10 @@ module stream_multiplier
         .err(buffer2_error_flag)
     );
 
-    always_comb begin   :   illegal_state_checker
-        illegal_state_flag = LOAD1 & LOAD2;
-    end :   illegal_state_checker
+    assign illegal_state_flag = LOAD1 & LOAD2;
+    assign err = buffer1_error_flag | buffer2_error_flag;
 
-    always_ff @(posedge CLK) begin  :   error_flag_registrator
-        if (RESET)  err_reg <= '0;
-        else        err_reg <= err;
-    end :   error_flag_registrator
-
-    always_comb begin   :   state_change_logic
+    always @(*) begin   :   state_change_logic
         next_state = current_state;
 
         case (current_state)
@@ -115,23 +106,21 @@ module stream_multiplier
             ST_ERROR:           if     (!err & !LOAD1 & !LOAD2)                                  next_state = ST_IDLE;
             default:                                                                             next_state = ST_IDLE;
         endcase
-    end :   state_change_logic
+    end
 
-    always_ff @(posedge CLK) begin  :   state_registrate
+    always @(posedge CLK) begin  :   state_registrate
         if(RESET) current_state <= ST_IDLE;
         else      current_state <= next_state;
-    end :   state_registrate
+    end
 
-    always_comb begin   :   buffers_control_logic
-        buffer1_pop         = 'x;
-        buffer1_rst         = 'x;
-        buffer1_push        = 'x;
-        buffer2_pop         = 'x;
-        buffer2_rst         = 'x;
-        buffer2_push        = 'x;
+    always @(*) begin   :   buffers_control_logic
+        buffer1_pop         = 1'bx;
+        buffer1_rst         = 1'bx;
+        buffer1_push        = 1'bx;
+        buffer2_pop         = 1'bx;
+        buffer2_rst         = 1'bx;
+        buffer2_push        = 1'bx;
         buffers_reload_flag = ((current_state==ST_UPLOAD_RESULT)&(next_state==ST_IDLE));
-
-        // if ((current_state==ST_UPLOAD_RESULT)&(next_state==ST_IDLE)) buffers_reload_flag = 1'b1;
 
         case (current_state)
             ST_IDLE:          begin    {buffer1_pop, buffer1_rst, buffer1_push} = {1'b0, RESET, (LOAD1 & !illegal_state_flag)};
@@ -147,27 +136,23 @@ module stream_multiplier
             default:          begin    {buffer1_pop, buffer1_rst, buffer1_push} = 3'b010;
                                        {buffer2_pop, buffer2_rst, buffer2_push} = 3'b010;                                       end
         endcase
-    end :   buffers_control_logic
+    end
 
-    always_ff @(posedge CLK) begin  :   data_output_logic
-        if (RESET)  DOUT <= '0;
+    always @(posedge CLK) begin  :   data_output_logic
+        if (RESET)  DOUT <= 0;
         else case (current_state)
-            ST_IDLE:          DOUT <= '0;
-            ST_LOAD1:         DOUT <= '0;
-            ST_LOAD2:         DOUT <= '0;
+            ST_IDLE:          DOUT <= 0;
+            ST_LOAD1:         DOUT <= 0;
+            ST_LOAD2:         DOUT <= 0;
             ST_UPLOAD_RESULT: DOUT <= buffer1_data_out * buffer2_data_out;
-            ST_ERROR:         DOUT <= 'x;
-            default:          DOUT <= 'x;
+            ST_ERROR:         DOUT <= {width{1'bx}};
+            default:          DOUT <= {width{1'bx}};
         endcase
-    end :   data_output_logic
+    end
 
-    always_ff @(posedge CLK) begin   :   status_flags_logic
-        if (RESET)  OE <= '0;
+    always @(posedge CLK) begin   :   status_flags_logic
+        if (RESET)  OE <= 1'b0;
         else        OE <= (current_state == ST_UPLOAD_RESULT);
-    end :   status_flags_logic
-
-    always_comb begin   :   error_flag_logic
-        err = buffer1_error_flag | buffer2_error_flag;
-    end :   error_flag_logic
+    end
 
 endmodule
