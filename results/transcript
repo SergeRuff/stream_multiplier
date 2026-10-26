@@ -21,9 +21,9 @@
 # test_timeout_cycles      : 10000000
 # 
 # Test was finished
-# ** Note: $finish    : src/testbench.sv(506)
+# ** Note: $finish    : solution/testbench.sv(506)
 #    Time: 250005 ns  Iteration: 3  Instance: /testbench
-# Break in Task testbench/test::run at src/testbench.sv line 506
+# Break in Task testbench/test::run at solution/testbench.sv line 506
 #  wave zoom full
 # {0 ps} {262505250 ps}
 # End time: 00:30:51 on Oct 27,2026, Elapsed time: 0:00:32
