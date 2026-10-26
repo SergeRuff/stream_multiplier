@@ -4,8 +4,7 @@ module testbench;
     logic       clk;
     logic       areset;
 
-    logic       s_tfirst1;
-    logic       s_tfirst2;
+    logic [1:0] s_tid;
     logic [0:7] s_tdata;
 
     logic       m_tvalid;
@@ -16,8 +15,8 @@ module testbench;
         .depth(128)
     ) DUT (
         .CLK    (clk),
-        .LOAD1  (s_tfirst1),
-        .LOAD2  (s_tfirst2),
+        .LOAD1  (s_tid[0]),
+        .LOAD2  (s_tid[1]),
         .RESET  (areset),
         .DIN    (s_tdata),
         .DOUT   (m_tdata),
@@ -29,8 +28,7 @@ module testbench;
     class input_data_sample;
         int         delay;
         logic [0:7] s_tdata;
-        logic       s_tfirst1;
-        logic       s_tfirst2;
+        logic [1:0] s_tid;
         logic       s_tlast;
     endclass
 
@@ -135,8 +133,8 @@ module testbench;
                 ds = create_sample();
                 if (i == 0) ds.delay = delay;
                 else        ds.delay = 0;
-                ds.s_tfirst1 = (i< load1_size);
-                ds.s_tfirst2 = (i>=load1_size);
+                ds.s_tid[0] = (i< load1_size);
+                ds.s_tid[1] = (i>=load1_size);
                 ds.s_tdata     = $urandom;
                 ds.s_tlast     = (i == (load1_size + load2_size -1));
                 gen2drv.put(ds);
@@ -170,24 +168,22 @@ module testbench;
         virtual task m_monitor();
             input_data_sample ds1, ds2;
             @(posedge clk);
-            while(s_tfirst1)    begin
+            while(s_tid[0])    begin
                 ds1 = new();
                 ds1.s_tdata = s_tdata;
                 ds1.delay = '0;
-                ds1.s_tfirst1 = s_tfirst1;
-                ds1.s_tfirst2 = s_tfirst2;
+                ds1.s_tid = s_tid;
                 @(posedge clk);
-                ds1.s_tlast   = !s_tfirst1;
+                ds1.s_tlast   = !s_tid[0];
                 in1_mbx.put(ds1);
             end
-            while(s_tfirst2)    begin
+            while(s_tid[1])    begin
                 ds2 = new();
                 ds2.s_tdata = s_tdata;
                 ds2.delay = '0;
-                ds2.s_tfirst1 = s_tfirst1;
-                ds2.s_tfirst2 = s_tfirst2;
+                ds2.s_tid = s_tid;
                 @(posedge clk);
-                ds2.s_tlast   = !s_tfirst2;
+                ds2.s_tlast   = !s_tid[1];
                 in2_mbx.put(ds2);
             end
         endtask
@@ -219,19 +215,16 @@ module testbench;
 
         virtual task  reset_master();
             s_tdata <= '0;
-            s_tfirst1 <= '0;
-            s_tfirst2 <= '0;
+            s_tid   <= '0;
         endtask
 
         virtual task drive_master(input input_data_sample ds);
             repeat(ds.delay) @(posedge clk);
-            s_tfirst1 <= ds.s_tfirst1;
-            s_tfirst2 <= ds.s_tfirst2;
+            s_tid <= ds.s_tid;
             s_tdata   <= ds.s_tdata;
             @(posedge clk);
             if (ds.s_tlast) begin
-                s_tfirst1 <= '0;
-                s_tfirst2 <= '0;
+                s_tid <= '0;
                 repeat(2) @(posedge clk);
                 while(m_tvalid) @(posedge clk);
             end
