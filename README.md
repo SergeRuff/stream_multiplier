@@ -1,63 +1,63 @@
-# Задание
+# Exercise
 
-Написать на языке Verilog устройство, реализующее произведение двух потоков данных. Причем один из сигналов должен быть «развернут» во времени. Таким образом, первый отсчет первого потока будет умножаться на последний отсчет второго сигнала, второй отсчет первого сигнала - соответственно, на предпоследний отсчет второго сигнала.
+Design a device in Verilog that computes the product of two data streams. The input sequence must be "reversed" in time: the first sample of the first stream is multiplied by the last sample of the second stream, the second sample of the first stream is multiplied by the second-to-last sample of the second stream, and so on.
 
-Сигнал представляет собой 128 отсчетов по 8 бит.
+Each signal consists of 128 samples, with each sample being 8 bits wide.
 
-По сигналу `load1` организовать запись первого потока извне в память устройства, по сигналу `load2` организовать запись второго потока данных. После записи обоих сигналов произвести перемножение двух сигналов и, сформировав сигнал `OE`, выводить результат.
+Use the `load1` signal to write the first data stream into the device's internal memory, and the `load2` signal to write the second data stream. Once both streams have been loaded, the device performs the multiplication and outputs the result, signaled by the assertion of an `OE` (Output Enable) signal.
 
-**На отлично:** контролировать объём данных для записи.
+**For an "excellent" grade:** Implement checks on the amount of data being written.
 
-В случае если массив входных данных заполнен, но сигнал `load1`/`load2` все еще активен, сформировать сигнал ошибки `err`.
+If the input data array is already full but the `load1` or `load2` signals remain active, the device must assert an error signal, `err`.
 
-В случае если сигнал `load1`/`load2` обнуляется раньше, чем заполняется массив, заполнить остальные ячейки нулями.
+If the `load1` or `load2` signal is deasserted before the array is completely filled, the remaining memory locations must be padded with zeros.
 
-### Входные сигналы:
+### Input signals:
 
-* `CLK` - тактовая синхронизация
-* `LOAD1`, `LOAD2` - сигналы загрузки данных
-* `RESET` - сброс накопителя перед накоплением
-* `DIN[0:7]` - входные данные
+* `CLK` - clock synchronization
+* `LOAD1`, `LOAD2` - data load signals
+* `RESET` - reset of the accumulator prior to accumulation
+* `DIN[0:7]` - input data
 
-### Выходные сигналы:
+### Output signals:
 
-* `DOUT[7:0]` - выходные данные накопителя
-* `OE` - флаг формирования данных
+* `DOUT[7:0]` - accumulator output data
+* `OE` - data generation flag
 
-## Дополнение к заданию
+## Addendum to the assignment
 
-Написать для данного устройства **testbench**, пригодный для запуска в ModelSim.
+Write a **testbench** for this device, suitable for execution in ModelSim.
 
-# Решение
+# Solution
 
 ![architecture.drawio.svg](resources/architecture.drawio.svg)
 
-Реализованный мною вариант устройства представляет из себя:
+The design I have implemented consists of the following:
 
-- 2 буфера отсчётов (экземпляры `oneshot_buffer`), один из которых инстанцируется как прямой (`parameter REVERSE_BUFFER_MODE = 0`), второй - как реверсивный (`parameter REVERSE_BUFFER_MODE = 1`). Принимают и накапливают входной поток DIN с последующей передачей данных из него на умножитель. Требуют сброса после окончания приёма и выгрузки.
-- Блок FSM и логики управления (скорее, **блоки** - всё это реализовано с помощью нескольких процедурных блоков) - принимает внешние сигналы, считывает флаги состояния от буферов и на основании всего этого формирует сигналы управления буферами, а также выходные сигналы.
+- Two sample buffers (instances of `oneshot_buffer`): one configured as "forward" (`parameter REVERSE_BUFFER_MODE = 0`) and the other as "reverse" (`parameter REVERSE_BUFFER_MODE = 1`). These buffers receive and accumulate the incoming `DIN` data stream, which is subsequently passed to a multiplier. They require a reset after the reception and data-out phases are complete.
+- An FSM (Finite State Machine) and control logic block—or rather, a set of blocks, implemented via several procedural blocks—that processes external signals and buffer status flags to generate control signals for the buffers, as well as the system's output signals.
 
-# Структура проекта
+# Project Structure
 
 ```
 .
-│   init.tcl    <----- Фикс для RPCClient (для ModelSim в GUI режиме)
-│   README.md   <----- Файл с описанием репозитория
-│   run_tb.bat  <----- Скрипт для запуска верификации (Windows cmd)
-│   run_tb.sh   <----- Скрипт для запуска верификации (Linux shell)
-├───extras      <----- Директория с альтернативным решением задания
-├───resources   <----- Ресурсы (*.svg)
-├───results     <----- Результаты одного из запусков тестбенча
-└───solution    <----- Директория с решением задачи 
+│   init.tcl    <----- Fix for RPCClient (for ModelSim in GUI mode)
+│   README.md   <----- Repository description file
+│   run_tb.bat  <----- Script to run verification (Windows cmd)
+│   run_tb.sh   <----- Script to run verification (Linux shell)
+├───extras      <----- Directory containing an alternative solution to the task
+├───resources   <----- Resources (*.svg)
+├───results     <----- Results from a testbench run
+└───solution    <----- Directory containing the solution to the task
 ```
 
-# Запуск верификации
+# Running the Verification
 
-#### Важно: перед запуском удостоверьтесь, что директория с исполняемыми файлами ModelSim добавлена в переменную окружения `PATH`.
+#### Important: Before running, ensure that the directory containing the ModelSim executable files has been added to your `PATH` environment variable.
 
 ### Windows
 
-Запустите файл `run_tb.bat` из-под командной строки:
+Execute the `run_tb.bat` file from the command line:
 
 ```cmd
 run_tb.bat
@@ -65,16 +65,16 @@ run_tb.bat
 
 ### Linux
 
-Установите разрешение на запуск файла `run_tb.sh`:
+Set the execution permission for the `run_tb.sh` file:
 
 ```bash
 chmod +x ./run_tb.sh
 ```
 
-Запустите `run_tb.sh`:
+Run `run_tb.sh`:
 
 ```
 ./run_tb.sh
 ```
 
-P.S: скрипты проверялись на ModelSim версии *Intel FPGA Edition 2020.1 Revision 2020.02*
+P.S. The scripts have been tested with ModelSim version *Intel FPGA Edition 2020.1 Revision 2020.02*.
