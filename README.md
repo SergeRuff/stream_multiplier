@@ -24,7 +24,7 @@ If the `load1` or `load2` signal is deasserted before the array is completely fi
 * `DOUT[7:0]` - accumulator output data
 * `OE` - data generation flag
 
-## Addendum to the assignment
+## Additional task
 
 Write a **testbench** for this device, suitable for execution in ModelSim.
 
@@ -51,7 +51,7 @@ The design I have implemented consists of the following:
 └───solution    <----- Directory containing the solution to the task
 ```
 
-# Running the Verification
+# How to run solution verification
 
 #### Important: Before running, ensure that the directory containing the ModelSim executable files has been added to your `PATH` environment variable.
 
